@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/hivox-logo.png" alt="Hivox VPN Logo" width="96" />
+<img src="assets/hivox-logo.svg" alt="Hivox VPN Logo" width="112" />
 
 # Hivox VPN
 
