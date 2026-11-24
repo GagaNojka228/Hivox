@@ -12,9 +12,17 @@
 [![Windows x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20(x64)-0078D4?style=for-the-badge&logo=windows&logoColor=white)](#скачать-v210)
 [![Android](https://img.shields.io/badge/Android-APK-3DDC84?style=for-the-badge&logo=android&logoColor=black)](#скачать-v210)
 
-[Скачать](#-скачать-v210) · [Возможности](#-возможности) · [Протоколы](#-поддерживаемые-протоколы) · [Быстрый старт](#-быстрый-старт) · [SHA-256](#-проверка-целостности-sha-256)
+[Интерфейс](#-интерфейс) · [Скачать](#-скачать-v210) · [Возможности](#-возможности) · [Протоколы](#-поддерживаемые-протоколы) · [Быстрый старт](#-быстрый-старт) · [SHA-256](#-проверка-целостности-sha-256)
 
 </div>
+
+---
+
+## 🖥️ Интерфейс
+
+| Подключено (телеметрия и график скорости) | Главный экран (список серверов) |
+| :---: | :---: |
+| [![Hivox VPN — Подключено](assets/hivox-windows-connected.png)](assets/hivox-windows-connected.png) | [![Hivox VPN — Главный экран](assets/hivox-windows-main.png)](assets/hivox-windows-main.png) |
 
 ---
 
