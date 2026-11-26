@@ -31,7 +31,7 @@
                     <controls:BrandLogo Width="28" Height="28" CornerRadiusSize="9" Margin="0,0,10,0"/>
                     <TextBlock Text="Hivox" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" VerticalAlignment="Center"/>
                     <Border CornerRadius="8" Background="{DynamicResource M3PrimaryContainerBrush}" Padding="7,2" Margin="8,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding AppVersionText, FallbackValue=v2.1.0}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource M3SecondaryBrush}"/>
+                        <TextBlock Text="{Binding AppVersionText, FallbackValue=v2.1.1}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource M3SecondaryBrush}"/>
                     </Border>
                 </StackPanel>
 

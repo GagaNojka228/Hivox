@@ -7,7 +7,7 @@
         <TextBlock Text="Hivox" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Center"/>
         <TextBlock Text="Secure Connection. Limitless Freedom." FontSize="12" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" HorizontalAlignment="Center" Margin="0,4,0,0"/>
         <Border CornerRadius="10" Background="{DynamicResource M3PrimaryContainerBrush}" Padding="10,4" HorizontalAlignment="Center" Margin="0,10,0,20">
-            <TextBlock Text="{Binding AppVersionLabel, FallbackValue=Версия 2.1.0}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource M3SecondaryBrush}"/>
+            <TextBlock Text="{Binding AppVersionLabel, FallbackValue=Версия 2.1.1}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource M3SecondaryBrush}"/>
         </Border>
 
         <Border Style="{StaticResource M3SettingsSection}" Margin="0,0,0,14" Padding="20">

@@ -16,10 +16,17 @@ namespace HivoxInstaller
         private bool _completed;
         private string _installedDir = "";
 
+        private static string GetAppVersion()
+        {
+            var v = Assembly.GetExecutingAssembly().GetName().Version;
+            return v != null ? $"{v.Major}.{v.Minor}.{v.Build}" : "2.1.1";
+        }
+
         public MainWindow(bool uninstallMode)
         {
             InitializeComponent();
             _uninstallMode = uninstallMode;
+            HeroTitle.Text = $"Hivox v{GetAppVersion()}";
 
             string defaultDir = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -331,7 +338,7 @@ namespace HivoxInstaller
             {
                 using var key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Uninstall\Hivox");
                 key.SetValue("DisplayName", "Hivox");
-                key.SetValue("DisplayVersion", "2.1.1");
+                key.SetValue("DisplayVersion", GetAppVersion());
                 key.SetValue("Publisher", "Hivox");
                 key.SetValue("InstallLocation", installDir);
                 key.SetValue("DisplayIcon", appExe);
