@@ -1,0 +1,70 @@
+<UserControl x:Class="Hivox.Views.SettingsMainPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hivox.Controls">
+    <ScrollViewer Style="{StaticResource M3ScrollViewer}">
+        <StackPanel Margin="0,0,0,24">
+            <!-- ВНЕШНИЙ ВИД -->
+            <TextBlock Text="ВНЕШНИЙ ВИД" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <local:M3SettingsRow x:Name="ThemeRow" Label="Тема оформления" Subtitle="Тёмная (Obsidian), Чёрная (AMOLED) и Светлая" IconData="{StaticResource IconSun}" ValueText="Тёмная" IsLink="True"/>
+            </Border>
+
+            <!-- СОЕДИНЕНИЕ И ТУННЕЛЬ -->
+            <TextBlock Text="СОЕДИНЕНИЕ И ТУННЕЛЬ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="ConnectionRow" Label="Соединение и автоматизация" Subtitle="Автоподключение, автозапуск Windows, Watchdog, обход РФ/LAN" IconData="{StaticResource IconBolt}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="TunnelRow" Label="Расширенный туннель" Subtitle="DNS, MTU, фрагментация, UDP Noises, Mux и авторизация прокси" IconData="{StaticResource IconTune}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="ProcessRulesRow" Label="Правила по процессам" Subtitle="Какие программы идут через VPN, а какие напрямую" IconData="{StaticResource IconApps}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="CoreRow" Label="Ядро маршрутизации" Subtitle="Выбор движка (Xray-core / Sing-box) для Proxy и TUN" IconData="{StaticResource IconCpu}" ValueText="Xray" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="IpTypeRow" Label="Предпочитаемый IP" Subtitle="Стратегия DNS-резолвинга (Auto / IPv4 / IPv6)" IconData="{StaticResource IconGlobe}" ValueText="Auto" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="InboundsRow" Label="Локальные Inbounds" Subtitle="Настройка портов HTTP и SOCKS5" IconData="{StaticResource IconRouter}" ValueText="Включено" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="GeoDataRow" Label="Geo-базы (geoip / geosite)" Subtitle="Обновление и проверка контрольных сумм SHA-256" IconData="{StaticResource IconLayers}" IsLink="True"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ПОДПИСКИ И СЕТЬ -->
+            <TextBlock Text="ПОДПИСКИ И ПИНГ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="SubsRow" Label="Подписки" Subtitle="Автообновление, сортировка и передача HWID" IconData="{StaticResource IconRss}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="PingRow" Label="Пинг и задержка" Subtitle="Real Ping / TCP / HTTP, шкала и тайм-аут" IconData="{StaticResource IconPulse}" IsLink="True"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ПРИЛОЖЕНИЕ И ДАННЫЕ -->
+            <TextBlock Text="ПРИЛОЖЕНИЕ И ДАННЫЕ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="BackupRow" Label="Резервное копирование" Subtitle="Экспорт и импорт настроек, серверов и подписок в JSON" IconData="{StaticResource IconSave}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="UrlSchemesRow" Label="Схемы URL (hivox://)" Subtitle="Регистрация протокола в Windows и импорт ссылок из буфера" IconData="{StaticResource IconLink}" ValueText="hivox://" IsLink="True"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ДИАГНОСТИКА И СИСТЕМА -->
+            <TextBlock Text="ДИАГНОСТИКА И СИСТЕМА" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="ConnectionCheckRow" Label="Проверить соединение" Subtitle="Внешний IP, DoH DNS, TCP и Real Ping в одном окне" IconData="{StaticResource IconShield}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="DiagnosticsRow" Label="Тест скорости и DNS" Subtitle="Замер пропускной способности и утечки DNS" IconData="{StaticResource IconSpeed}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="LogsRow" Label="Журнал работы (Логи)" Subtitle="Открыть файл логов в проводнике" IconData="{StaticResource IconLog}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="ResetRow" Label="Сброс настроек" Subtitle="Вернуть конфигурацию по умолчанию" IconData="{StaticResource IconRefresh}" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="AboutRow" Label="О программе" Subtitle="Версия, поддерживаемые ядра и протоколы" IconData="{StaticResource IconInfo}" IsLink="True"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

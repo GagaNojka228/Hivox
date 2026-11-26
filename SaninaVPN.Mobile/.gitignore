@@ -1,0 +1,28 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.userprefs
+*.vs/
+
+## Build
+*.apk
+*.aab
+*.keystore
+
+## IDE
+.vs/
+.vscode/
+.idea/
+*.sln.DotSettings.user
+
+## OS
+Thumbs.db
+.DS_Store
+
+## Raw big files (download manually)
+Resources/Raw/sing-box
+Resources/Raw/geoip.dat
+Resources/Raw/geosite.dat

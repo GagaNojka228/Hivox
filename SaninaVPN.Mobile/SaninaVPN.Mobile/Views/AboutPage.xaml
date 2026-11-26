@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             xmlns:controls="clr-namespace:Hivox.Mobile.Controls"
+             x:Class="Hivox.Mobile.Views.AboutPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="О программе" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14" Padding="20,16,20,28" HorizontalOptions="Center">
+                <controls:BrandLogo WidthRequest="80" HeightRequest="80" CornerRadius="22" HorizontalOptions="Center"/>
+                <Label Text="Hivox" FontSize="26" FontAttributes="Bold"
+                       HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                <Label Text="Secure Connection. Limitless Freedom." FontSize="12.5"
+                       HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+
+                <Border StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                        BackgroundColor="{DynamicResource M3PrimaryContainer}"
+                        Padding="12,5" HorizontalOptions="Center">
+                    <Label Text="{Binding AppVersionLabel}" FontSize="12" FontAttributes="Bold"
+                           TextColor="{DynamicResource M3Secondary}"/>
+                </Border>
+
+                <Border Style="{StaticResource M3Card}" Padding="20" Margin="0,6,0,0">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="ТЕХНОЛОГИИ" FontSize="11" FontAttributes="Bold"
+                               TextColor="{DynamicResource M3Primary}"/>
+                        <Label Text="Ядро маршрутизации: Xray-core 26.11" FontSize="13.5" FontAttributes="Bold"
+                               TextColor="{DynamicResource M3OnSurface}"/>
+                        <Label Text="Протоколы: VLESS (Reality / WS / gRPC / XHTTP), VMess, Trojan, Shadowsocks, Hysteria2, SOCKS5"
+                               FontSize="12.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        <Label Text="Режимы работы: TUN (Android VpnService) и локальный Proxy (HTTP / SOCKS5)"
+                               FontSize="12.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="© 2024–2026 Hivox" FontSize="11.5"
+                       HorizontalOptions="Center" TextColor="{DynamicResource M3Outline}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

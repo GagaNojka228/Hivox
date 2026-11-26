@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.PingSettingsPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Пинг и задержка" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0" Padding="0,0,0,28">
+
+                <!-- Протокол -->
+                <Label Text="ПРОТОКОЛ ПРОВЕРКИ" Style="{StaticResource M3SectionTitle}" Margin="20,4,20,8"/>
+                <Border Style="{StaticResource M3SettingsCard}" Padding="10">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="1.1*,0.7*,1.05*,1.15*" ColumnSpacing="5">
+                            <Border x:Name="ProtoProxyBtn" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="3,9">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnProtoProxyTapped"/></Border.GestureRecognizers>
+                                <Label Text="Real Ping" FontSize="11" FontAttributes="Bold" LineBreakMode="TailTruncation" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                            </Border>
+                            <Border x:Name="ProtoTcpBtn" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="3,9">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnProtoTcpTapped"/></Border.GestureRecognizers>
+                                <Label Text="TCP" FontSize="11" FontAttributes="Bold" LineBreakMode="TailTruncation" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                            </Border>
+                            <Border x:Name="ProtoGetBtn" Grid.Column="2" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="3,9">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnProtoGetTapped"/></Border.GestureRecognizers>
+                                <Label Text="HTTP GET" FontSize="11" FontAttributes="Bold" LineBreakMode="TailTruncation" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                            </Border>
+                            <Border x:Name="ProtoHeadBtn" Grid.Column="3" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="3,9">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnProtoHeadTapped"/></Border.GestureRecognizers>
+                                <Label Text="HTTP HEAD" FontSize="11" FontAttributes="Bold" LineBreakMode="TailTruncation" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                            </Border>
+                        </Grid>
+                        <Label x:Name="ProtoHintLabel"
+                               Text="TCP измеряет время handshake напрямую к серверу. Real Ping проверяет реальную задержку через активный туннель."
+                               FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Отображение -->
+                <Label Text="ОТОБРАЖЕНИЕ ПИНГА" Style="{StaticResource M3SectionTitle}"/>
+                <Border Style="{StaticResource M3SettingsCard}" Padding="10">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Border x:Name="DispTimeBtn" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="10,10">
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDispTimeTapped"/></Border.GestureRecognizers>
+                            <Label Text="Цифры (ms)" FontSize="12.5" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                        </Border>
+                        <Border x:Name="DispDotsBtn" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="Transparent" Padding="10,10">
+                            <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnDispDotsTapped"/></Border.GestureRecognizers>
+                            <Label Text="Статус (текст)" FontSize="12.5" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{DynamicResource M3OnSurface}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Тестовый URL -->
+                <Label Text="ТЕСТОВЫЙ URL" Style="{StaticResource M3SectionTitle}"/>
+                <Border Style="{StaticResource M3SettingsCard}" Padding="14">
+                    <VerticalStackLayout Spacing="10">
+                        <Border StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}" StrokeThickness="1"
+                                BackgroundColor="{DynamicResource M3SurfaceContainerHigh}" HeightRequest="42" Padding="10,0">
+                            <Entry x:Name="TestUrlEntry" FontSize="12.5"
+                                   BackgroundColor="Transparent"
+                                   Placeholder="https://www.gstatic.com/generate_204"
+                                   PlaceholderColor="{DynamicResource M3Outline}"
+                                   TextColor="{DynamicResource M3OnSurface}"
+                                   VerticalOptions="Center" VerticalTextAlignment="Center"/>
+                        </Border>
+                        <Label Text="Пресеты" FontSize="11" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                            <Button Grid.Column="0" Text="Google 204" Style="{StaticResource M3TonalBtn}" HeightRequest="36" FontSize="11.5" Padding="6,0" Clicked="OnPresetGoogle"/>
+                            <Button Grid.Column="1" Text="Cloudflare" Style="{StaticResource M3TonalBtn}" HeightRequest="36" FontSize="11.5" Padding="6,0" Clicked="OnPresetCloudflare"/>
+                            <Button Grid.Column="2" Text="Apple" Style="{StaticResource M3TonalBtn}" HeightRequest="36" FontSize="11.5" Padding="6,0" Clicked="OnPresetApple"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Тайм-аут -->
+                <Label Text="ТАЙМ-АУТ" Style="{StaticResource M3SectionTitle}"/>
+                <Border Style="{StaticResource M3SettingsCard}" Padding="16,12">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Тайм-аут пинга" FontSize="14" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                            <Label Text="Максимальное время ожидания ответа" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        </VerticalStackLayout>
+                        <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                            <Border Style="{StaticResource M3CircleIconBtn}" WidthRequest="34" HeightRequest="34">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTimeoutMinus"/></Border.GestureRecognizers>
+                                <Label Text="−" FontSize="16" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Border StrokeShape="RoundRectangle 10" Stroke="Transparent" BackgroundColor="{DynamicResource M3PrimaryContainer}" Padding="12,6" MinimumWidthRequest="44">
+                                <Label x:Name="TimeoutLabel" Text="3s" FontSize="12.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnPrimaryContainer}" HorizontalOptions="Center"/>
+                            </Border>
+                            <Border Style="{StaticResource M3CircleIconBtn}" WidthRequest="34" HeightRequest="34">
+                                <Border.GestureRecognizers><TapGestureRecognizer Tapped="OnTimeoutPlus"/></Border.GestureRecognizers>
+                                <Label Text="+" FontSize="16" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Button Text="Сохранить" Style="{StaticResource M3FilledBtn}" Margin="20,20,20,0" Clicked="OnSaveClicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

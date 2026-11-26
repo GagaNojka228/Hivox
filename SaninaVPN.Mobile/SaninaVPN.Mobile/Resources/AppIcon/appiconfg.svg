@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108">
+  <defs>
+    <linearGradient id="leftPillar" gradientUnits="userSpaceOnUse" x1="26" y1="15" x2="26" y2="85">
+      <stop offset="0%" stop-color="#EADDFF"/>
+      <stop offset="100%" stop-color="#7C4DFF"/>
+    </linearGradient>
+    <linearGradient id="rightPillar" gradientUnits="userSpaceOnUse" x1="74" y1="15" x2="74" y2="85">
+      <stop offset="0%" stop-color="#B388FF"/>
+      <stop offset="100%" stop-color="#FF80E1"/>
+    </linearGradient>
+    <linearGradient id="wave" gradientUnits="userSpaceOnUse" x1="19" y1="50" x2="81" y2="50">
+      <stop offset="0%" stop-color="#7C4DFF"/>
+      <stop offset="50%" stop-color="#B388FF"/>
+      <stop offset="100%" stop-color="#FF80E1"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(20,20) scale(0.68)">
+    <rect x="19" y="15" width="14" height="70" rx="7" fill="url(#leftPillar)"/>
+    <rect x="67" y="15" width="14" height="70" rx="7" fill="url(#rightPillar)"/>
+    <path d="M26,64 C26,42 74,58 74,36" fill="none" stroke="url(#wave)" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="50" cy="28.5" r="5.5" fill="#EADDFF"/>
+    <circle cx="50" cy="71.5" r="5.5" fill="#B388FF"/>
+  </g>
+</svg>

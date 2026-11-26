@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             xmlns:models="clr-namespace:Hivox.Mobile.Models"
+             x:Class="Hivox.Mobile.Views.ServersPage"
+             x:Name="ThisPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto,Auto" Padding="20,16,20,10" ColumnSpacing="8">
+            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                <Label Text="Серверы" FontSize="22" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3OnSurface}"
+                       VerticalOptions="Center"/>
+                <Border StrokeShape="RoundRectangle 10" Stroke="Transparent"
+                        BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                        Padding="9,3" VerticalOptions="Center">
+                    <Label Text="{Binding ServerCountText}" FontSize="11" FontAttributes="Bold"
+                           TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                </Border>
+            </HorizontalStackLayout>
+
+            <Border Grid.Column="1" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSortTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE164;" FontSize="19" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding PingAllCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE627;" FontSize="19" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+
+            <Border Grid.Column="3" WidthRequest="38" HeightRequest="38"
+                    StrokeShape="RoundRectangle 19" Stroke="Transparent"
+                    BackgroundColor="{DynamicResource M3Primary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddServerTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE145;" FontSize="20" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnPrimary}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <!-- Pill Search Input -->
+        <Border Grid.Row="1" Margin="20,0,20,10" Padding="10,0" HeightRequest="44"
+                StrokeShape="RoundRectangle 22"
+                Stroke="{DynamicResource M3OutlineVariantBrush}"
+                StrokeThickness="1"
+                BackgroundColor="{DynamicResource M3SurfaceContainerLow}">
+            <Grid ColumnDefinitions="*,Auto">
+                <SearchBar Grid.Column="0"
+                           Placeholder="Поиск по стране, названию или протоколу..."
+                           Text="{Binding SearchText}"
+                           FontSize="13.5"/>
+                <Border Grid.Column="1" WidthRequest="26" HeightRequest="26"
+                        StrokeShape="RoundRectangle 13" Stroke="Transparent"
+                        BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                        VerticalOptions="Center"
+                        IsVisible="{Binding HasSearchText}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClearSearchCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Label Text="&#xE5CD;" FontSize="14" FontFamily="MaterialIcons"
+                           TextColor="{DynamicResource M3OnSurfaceVariant}"
+                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Server List -->
+        <RefreshView Grid.Row="2"
+                     IsRefreshing="{Binding IsPullRefreshing}"
+                     Command="{Binding PullRefreshCommand}"
+                     RefreshColor="{DynamicResource M3Primary}">
+            <CollectionView ItemsSource="{Binding FilteredServers}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ServerInfo">
+                        <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Копировать"
+                                               BackgroundColor="#7C4DFF"
+                                               Invoked="OnCopyServerInvoked"/>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Удалить"
+                                               BackgroundColor="#EF5350"
+                                               Invoked="OnDeleteServerInvoked"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border Margin="20,4" Padding="14,12"
+                                    StrokeShape="RoundRectangle 18"
+                                    StrokeThickness="1.5"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainer}">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="Stroke" Value="{DynamicResource M3PrimaryBrush}"/>
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource M3PrimaryContainer}"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter Property="Stroke" Value="{DynamicResource M3OutlineVariantBrush}"/>
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource M3SurfaceContainer}"/>
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnServerTapped"/>
+                                </Border.GestureRecognizers>
+
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <!-- Flag Badge -->
+                                    <Border Grid.Column="0" WidthRequest="42" HeightRequest="34"
+                                            StrokeShape="RoundRectangle 10"
+                                            Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                            StrokeThickness="1"
+                                            BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                            VerticalOptions="Center">
+                                        <Label Text="{Binding Flag}" FontSize="19"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Title + Badges + Location -->
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                        <Label Text="{Binding Name}" FontSize="13.5" FontAttributes="Bold"
+                                               TextColor="{DynamicResource M3OnSurface}"
+                                               LineBreakMode="TailTruncation"/>
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                                            <HorizontalStackLayout Grid.Column="0" Spacing="4">
+                                                <Border StrokeShape="RoundRectangle 6" Stroke="Transparent" Padding="6,2"
+                                                        BackgroundColor="{Binding Protocol, Converter={StaticResource ProtocolToBadgeColor}}">
+                                                    <Label Text="{Binding Protocol}" FontSize="9.5" FontAttributes="Bold"
+                                                           TextColor="{Binding Protocol, Converter={StaticResource ProtocolToBadgeForeground}}"/>
+                                                </Border>
+                                                <Border StrokeShape="RoundRectangle 6" Stroke="Transparent" Padding="6,2"
+                                                        IsVisible="{Binding HasTransport}"
+                                                        BackgroundColor="{Binding Transport, Converter={StaticResource ProtocolToBadgeColor}}">
+                                                    <Label Text="{Binding Transport}" FontSize="9.5" FontAttributes="Bold"
+                                                           TextColor="{Binding Transport, Converter={StaticResource ProtocolToBadgeForeground}}"/>
+                                                </Border>
+                                                <Border StrokeShape="RoundRectangle 6" Stroke="Transparent" Padding="6,2"
+                                                        IsVisible="{Binding HasSecurity}"
+                                                        BackgroundColor="{Binding Security, Converter={StaticResource ProtocolToBadgeColor}}">
+                                                    <Label Text="{Binding Security}" FontSize="9.5" FontAttributes="Bold"
+                                                           TextColor="{Binding Security, Converter={StaticResource ProtocolToBadgeForeground}}"/>
+                                                </Border>
+                                            </HorizontalStackLayout>
+                                            <Label Grid.Column="1" Text="{Binding LocationSummary}" FontSize="10.5"
+                                                   TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                                   VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+
+                                    <!-- Ping Pill -->
+                                    <Border Grid.Column="2" StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                            Background="{Binding Ping, Converter={StaticResource PingToBackground}}"
+                                            Padding="10,5" VerticalOptions="Center">
+                                        <Label Text="{Binding PingText}" FontSize="11.5" FontAttributes="Bold"
+                                               TextColor="{Binding Ping, Converter={StaticResource PingToColorConverter}}"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <BoxView HeightRequest="10" Color="Transparent"/>
+                </CollectionView.Footer>
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8" Padding="32">
+                        <Label Text="Серверы не найдены" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        <Label Text="Измените поиск или добавьте подписку" FontSize="13" HorizontalOptions="Center"
+                               TextColor="{DynamicResource M3Outline}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

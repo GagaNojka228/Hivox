@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.SubscriptionsPage"
+             x:Name="ThisPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Мои подписки" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+            <Border Grid.Column="2" WidthRequest="38" HeightRequest="38"
+                    StrokeShape="RoundRectangle 19" Stroke="Transparent"
+                    BackgroundColor="{DynamicResource M3Primary}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE145;" FontSize="22" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnPrimary}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <!-- Subscription List -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsSubPullRefreshing}"
+                     Command="{Binding PullRefreshSubscriptionsCommand}"
+                     RefreshColor="{DynamicResource M3Primary}">
+            <CollectionView ItemsSource="{Binding Subscriptions}"
+                            Margin="20,4">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Удалить"
+                                               BackgroundColor="#F87171"
+                                               Invoked="OnDeleteSubscriptionInvoked"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Border Margin="0,5" Padding="14,14"
+                                    StrokeShape="RoundRectangle 18"
+                                    Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainer}">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                            StrokeShape="RoundRectangle 12" Stroke="Transparent"
+                                            BackgroundColor="{DynamicResource M3PrimaryContainer}">
+                                        <Label Text="&#xE0E5;" FontSize="20" FontFamily="MaterialIcons"
+                                               TextColor="{DynamicResource M3Primary}"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <Label Grid.Column="1" Text="{Binding .}" FontSize="13"
+                                           LineBreakMode="MiddleTruncation"
+                                           VerticalOptions="Center"
+                                           TextColor="{DynamicResource M3OnSurface}"/>
+                                    <Border Grid.Column="2" WidthRequest="34" HeightRequest="34"
+                                            StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                            BackgroundColor="{DynamicResource M3RedContainer}">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnDeleteSubscriptionTapped"/>
+                                        </Border.GestureRecognizers>
+                                        <Label Text="&#xE872;" FontSize="18" FontFamily="MaterialIcons"
+                                               TextColor="{DynamicResource M3Red}"
+                                               HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8" Padding="32">
+                        <Label Text="&#xE0E5;" FontSize="40" FontFamily="MaterialIcons"
+                               TextColor="{DynamicResource M3Primary}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Нет подписок" FontSize="17" FontAttributes="Bold" HorizontalOptions="Center"
+                               TextColor="{DynamicResource M3OnSurface}"/>
+                        <Label Text="Нажмите + или «Добавить», чтобы загрузить серверы"
+                               FontSize="13" HorizontalTextAlignment="Center"
+                               TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Bottom actions -->
+        <Grid Grid.Row="2" Padding="20,12" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Grid.Column="0" Text="+ Добавить" Clicked="OnAddSubscriptionClicked"
+                    Style="{StaticResource M3FilledBtn}"/>
+            <Button Grid.Column="1" Text="Обновить все" Clicked="OnUpdateAllClicked"
+                    Style="{StaticResource M3TonalBtn}"/>
+        </Grid>
+    </Grid>
+</ContentPage>

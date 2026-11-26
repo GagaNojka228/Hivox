@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.IpTypePage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Предпочитаемый IP" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16" Padding="0,8,0,24">
+                <Border Style="{StaticResource M3SettingsCard}">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid Padding="16,14" ColumnDefinitions="*,Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAutoRowTapped"/>
+                            </Grid.GestureRecognizers>
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Auto" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Автоматическая стратегия DNS (рекомендуется)" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <RadioButton x:Name="AutoRadio" Grid.Column="1" GroupName="IpType" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,14" ColumnDefinitions="*,Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnIpv4RowTapped"/>
+                            </Grid.GestureRecognizers>
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Только IPv4" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Резолвить только IPv4-адреса" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <RadioButton x:Name="Ipv4Radio" Grid.Column="1" GroupName="IpType" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,14" ColumnDefinitions="*,Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnIpv6RowTapped"/>
+                            </Grid.GestureRecognizers>
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Только IPv6" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Включает IPv6-маршрут в TUN и UseIPv6" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <RadioButton x:Name="Ipv6Radio" Grid.Column="1" GroupName="IpType" VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Сохранить" Style="{StaticResource M3FilledBtn}" Margin="20,4" Clicked="OnSaveClicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

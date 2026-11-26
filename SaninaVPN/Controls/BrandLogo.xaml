@@ -1,0 +1,55 @@
+<UserControl x:Class="Hivox.Controls.BrandLogo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Border CornerRadius="{Binding CornerRadiusSize, RelativeSource={RelativeSource AncestorType=UserControl}}"
+            BorderThickness="1.2">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#2A1B3D" Offset="0"/>
+                <GradientStop Color="#140D22" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#9D78FF" Offset="0"/>
+                <GradientStop Color="#7C4DFF" Offset="0.6"/>
+                <GradientStop Color="#4B2B85" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Viewbox Stretch="Uniform" Margin="2">
+            <Canvas Width="100" Height="100">
+                <!-- Left vertical node pillar -->
+                <Rectangle Canvas.Left="19" Canvas.Top="15" Width="14" Height="70" RadiusX="7" RadiusY="7">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#EADDFF" Offset="0"/>
+                            <GradientStop Color="#7C4DFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!-- Right vertical node pillar -->
+                <Rectangle Canvas.Left="67" Canvas.Top="15" Width="14" Height="70" RadiusX="7" RadiusY="7">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#B388FF" Offset="0"/>
+                            <GradientStop Color="#FF80E1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!-- Intertwined tunnel flow wave -->
+                <Path Data="M26,64 C26,42 74,58 74,36" StrokeThickness="14" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+                    <Path.Stroke>
+                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                            <GradientStop Color="#7C4DFF" Offset="0"/>
+                            <GradientStop Color="#B388FF" Offset="0.5"/>
+                            <GradientStop Color="#FF80E1" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Path.Stroke>
+                </Path>
+                <!-- Connection dots -->
+                <Ellipse Canvas.Left="44.5" Canvas.Top="23" Width="11" Height="11" Fill="#EADDFF"/>
+                <Ellipse Canvas.Left="44.5" Canvas.Top="66" Width="11" Height="11" Fill="#B388FF"/>
+            </Canvas>
+        </Viewbox>
+    </Border>
+</UserControl>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Hivox.Mobile.Views.GeoDataPage"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <Label Grid.Column="1" Text="Geo-базы (SHA-256)" FontSize="19" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+            <Border Grid.Column="2" StrokeShape="RoundRectangle 12" Padding="10,6"
+                    BackgroundColor="Transparent" StrokeThickness="0" VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDoneTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="Готово" FontSize="15" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16" Padding="18,6,18,32">
+
+                <!-- Files Status Card -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="ЛОКАЛЬНЫЕ ФАЙЛЫ МАРШРУТИЗАЦИИ" FontSize="11" FontAttributes="Bold"
+                               CharacterSpacing="0.8" TextColor="{DynamicResource M3Primary}" />
+
+                        <!-- geoip.dat -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 11"
+                                    BackgroundColor="#1F06B6D4" Stroke="#4006B6D4" StrokeThickness="1" VerticalOptions="Center">
+                                <Label Text="&#xE55B;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="geoip.dat" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}" />
+                                <Label x:Name="GeoIpShaLabel" Text="SHA-256: —" FontSize="11" FontFamily="monospace"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                            <Label x:Name="GeoIpSizeLabel" Grid.Column="2" Text="—" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}" Margin="0" />
+
+                        <!-- geosite.dat -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 11"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1" VerticalOptions="Center">
+                                <Label Text="&#xE894;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="geosite.dat" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}" />
+                                <Label x:Name="GeoSiteShaLabel" Text="SHA-256: —" FontSize="11" FontFamily="monospace"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" LineBreakMode="TailTruncation" />
+                            </VerticalStackLayout>
+                            <Label x:Name="GeoSiteSizeLabel" Grid.Column="2" Text="—" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <Label x:Name="LastUpdatedLabel" Text="Последнее обновление: встроенная база"
+                               FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="2,4,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Schedule Settings Card -->
+                <Border Style="{StaticResource M3Card}" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="12">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 11"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1" VerticalOptions="Center">
+                                <Label Text="&#xE8B5;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Автообновление" FontSize="15" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Проверять и обновлять базы по расписанию" FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="GeoAutoSwitch" Grid.Column="2" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}" />
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="12">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 11"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1" VerticalOptions="Center">
+                                <Label Text="&#xE5D5;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Интервал проверки" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" Padding="12,8" VerticalOptions="Center">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnIntervalTapped" />
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label x:Name="IntervalLabel" Text="7 дней" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                    <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                           TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Verification Security Note -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Label Text="&#xE32A;" FontSize="20" FontFamily="MaterialIcons"
+                               TextColor="{DynamicResource M3Green}" VerticalOptions="Start" />
+                        <Label Grid.Column="1"
+                               Text="Перед заменой файлов проверяется эталонная контрольная сумма SHA-256 с официального репозитория v2ray-rules-dat. Повреждённые или подменённые файлы отклоняются."
+                               FontSize="12.5" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.2" />
+                    </Grid>
+                </Border>
+
+                <!-- Progress / Result Status -->
+                <HorizontalStackLayout x:Name="ProgressRow" IsVisible="False" Spacing="10" HorizontalOptions="Center">
+                    <ActivityIndicator x:Name="UpdateSpinner" IsRunning="False" Color="{DynamicResource M3Primary}"
+                                       WidthRequest="22" HeightRequest="22" />
+                    <Label x:Name="StatusLabel" Text="" FontSize="13" TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Label x:Name="ResultBannerLabel" IsVisible="False" FontSize="13" FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" TextColor="{DynamicResource M3Green}" />
+
+                <!-- Update Button -->
+                <Button x:Name="UpdateBtn"
+                        Text="Обновить базы (SHA-256)"
+                        Style="{StaticResource M3FilledBtn}"
+                        HeightRequest="48"
+                        Clicked="OnUpdateClicked" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

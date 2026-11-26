@@ -9,10 +9,10 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/GagaNojka228/Hivox?style=for-the-badge&color=6750A4&label=Release)](https://github.com/GagaNojka228/Hivox/releases/latest)
 [![Total Downloads](https://img.shields.io/github/downloads/GagaNojka228/Hivox/total?style=for-the-badge&color=006A6A&label=Downloads)](https://github.com/GagaNojka228/Hivox/releases)
-[![Windows x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20(x64)-0078D4?style=for-the-badge&logo=windows&logoColor=white)](#скачать-v210)
-[![Android](https://img.shields.io/badge/Android-APK-3DDC84?style=for-the-badge&logo=android&logoColor=black)](#скачать-v210)
+[![Windows x64](https://img.shields.io/badge/Windows-10%20%2F%2011%20(x64)-0078D4?style=for-the-badge&logo=windows&logoColor=white)](#скачать-v211)
+[![Android](https://img.shields.io/badge/Android-APK-3DDC84?style=for-the-badge&logo=android&logoColor=black)](#скачать-v211)
 
-[Интерфейс](#-интерфейс) · [Скачать](#-скачать-v210) · [Возможности](#-возможности) · [Протоколы](#-поддерживаемые-протоколы) · [Быстрый старт](#-быстрый-старт) · [SHA-256](#-проверка-целостности-sha-256)
+[Интерфейс](#-интерфейс) · [Скачать](#-скачать-v211) · [Возможности](#-возможности) · [Протоколы](#-поддерживаемые-протоколы) · [Быстрый старт](#-быстрый-старт) · [Attestations и SHA-256](#-проверка-подлинности-сборки-attestations-и-sha-256)
 
 </div>
 
@@ -26,16 +26,16 @@
 
 ---
 
-## 📦 Скачать (v2.1.0)
+## 📦 Скачать (v2.1.1)
 
-Все актуальные сборки доступны на странице [Releases](https://github.com/GagaNojka228/Hivox/releases/latest).
+Все актуальные сборки собираются автоматически в **GitHub Actions** с криптографическим подтверждением сборки (**Artifact Attestations**) и доступны на странице [Releases](https://github.com/GagaNojka228/Hivox/releases/latest).
 
-| Платформа | Файл | Описание | Размер | Скачать |
-| :--- | :--- | :--- | :---: | :---: |
-| **Windows 10/11 (x64)** | `Hivox-Setup-v2.1.0-win-x64.exe` | Установщик (всё включено) | ~148.4 MB | [Скачать EXE](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.0/Hivox-Setup-v2.1.0-win-x64.exe) |
-| **Windows 10/11 (x64)** | `Hivox-Portable-v2.1.0-win-x64.zip` | Портативная версия (без установки) | ~89.5 MB | [Скачать ZIP](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.0/Hivox-Portable-v2.1.0-win-x64.zip) |
-| **Android** | `Hivox-v2.1.0-android.apk` | Установочный пакет для смартфона | ~65.6 MB | [Скачать APK](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.0/Hivox-v2.1.0-android.apk) |
-| **Checksums** | `SHA256SUMS.txt` | Контрольные суммы файлов | 288 B | [Скачать TXT](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.0/SHA256SUMS.txt) |
+| Платформа | Файл | Описание | Скачать |
+| :--- | :--- | :--- | :---: |
+| **Windows 10/11 (x64)** | `Hivox-Setup-v2.1.1-win-x64.exe` | Установщик (всё включено) | [Скачать EXE](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.1/Hivox-Setup-v2.1.1-win-x64.exe) |
+| **Windows 10/11 (x64)** | `Hivox-Portable-v2.1.1-win-x64.zip` | Портативная версия (без установки) | [Скачать ZIP](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.1/Hivox-Portable-v2.1.1-win-x64.zip) |
+| **Android** | `Hivox-v2.1.1-android.apk` | Установочный пакет для смартфона | [Скачать APK](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.1/Hivox-v2.1.1-android.apk) |
+| **Checksums** | `SHA256SUMS.txt` | Контрольные суммы файлов | [Скачать TXT](https://github.com/GagaNojka228/Hivox/releases/download/v2.1.1/SHA256SUMS.txt) |
 
 ---
 
@@ -66,36 +66,30 @@
 ## 🚀 Быстрый старт
 
 ### Windows (x64)
-1. Скачайте **`Hivox-Setup-v2.1.0-win-x64.exe`** и запустите установку (либо распакуйте **`Hivox-Portable-v2.1.0-win-x64.zip`** в любую папку и запустите `Hivox.exe`).
+1. Скачайте **`Hivox-Setup-v2.1.1-win-x64.exe`** и запустите установку (либо распакуйте **`Hivox-Portable-v2.1.1-win-x64.zip`** в любую папку и запустите `Hivox.exe`).
 2. Нажмите **`+`**, чтобы добавить ссылку на подписку или отдельный сервер.
 3. Выберите сервер из списка и нажмите кнопку подключения.
 
 ### Android
-1. Скачайте **`Hivox-v2.1.0-android.apk`** на телефон и разрешите установку из браузера / файлового менеджера.
+1. Скачайте **`Hivox-v2.1.1-android.apk`** на телефон и разрешите установку из браузера / файлового менеджера.
 2. Откройте **Hivox**, добавьте подписку или конфигурацию.
 3. Нажмите кнопку подключения и подтвердите создание VPN-профиля в системе Android.
 
 ---
 
-## 🔐 Проверка целостности (SHA-256)
+## 🔐 Проверка подлинности сборки (Attestations и SHA-256)
 
-<details>
-<summary>Показать контрольные суммы SHA-256 и отпечаток сертификата Android</summary>
+Все релизные файлы начиная с `v2.1.1` собираются в GitHub Actions и подписываются криптографическим подтверждением происхождения (**GitHub Artifact Attestations**). Вы можете проверить, что скачанный файл собран именно из исходного кода этого репозитория:
 
-```text
-000d1ebd4aea33eb1ea93ce0b7869b01283306b521b609a71f93fcd46a8d5c4e  Hivox-Portable-v2.1.0-win-x64.zip
-9bde8960899982456155de157895f2e5cd23c33f117f2968d1e5f8a66332a943  Hivox-Setup-v2.1.0-win-x64.exe
-c1b61cd3862f5f472f273914d665b444f8f80fe91c5df4b7363ca232965c9276  Hivox-v2.1.0-android.apk
+```bash
+gh attestation verify Hivox-Setup-v2.1.1-win-x64.exe --repo GagaNojka228/Hivox
+gh attestation verify Hivox-Portable-v2.1.1-win-x64.zip --repo GagaNojka228/Hivox
+gh attestation verify Hivox-v2.1.1-android.apk --repo GagaNojka228/Hivox
 ```
 
-**Проверка в Windows PowerShell:**
+Контрольные суммы SHA-256 для каждого релиза публикуются в файле `SHA256SUMS.txt` на странице [Releases](https://github.com/GagaNojka228/Hivox/releases/latest).
+
+**Проверка SHA-256 в Windows PowerShell:**
 ```powershell
-Get-FileHash .\Hivox-Setup-v2.1.0-win-x64.exe -Algorithm SHA256
+Get-FileHash .\Hivox-Setup-v2.1.1-win-x64.exe -Algorithm SHA256
 ```
-
-**Сертификат подписи Android APK (SHA-256):**
-```text
-4a67c92f808e7ad89b241dbc0e10732aa6dd9e81fcbd6430dcbd0939812a9f71
-```
-
-</details>

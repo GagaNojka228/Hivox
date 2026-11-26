@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Hivox.Mobile.Views.TunnelSettingsPage"
+             BackgroundColor="{DynamicResource M3SurfaceDim}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontFamily="MaterialIcons" FontSize="18"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <Label Grid.Column="1" Text="Туннель" FontSize="19" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+            <Border Grid.Column="2" StrokeShape="RoundRectangle 12" Padding="10,6"
+                    BackgroundColor="Transparent" StrokeThickness="0" VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDoneClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="Готово" FontSize="15" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Padding="16,4,16,36">
+            <VerticalStackLayout Spacing="16">
+
+                <!-- Card 1: Main Tunnel, DPI Bypass, Mux, IP/DNS/MTU -->
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 22" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Tunnel Mode -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE53B;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Режим туннеля" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" Padding="12,8" VerticalOptions="Center">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTunnelModeClicked" />
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                    <Label x:Name="TunnelModeLabel" Text="TUN + Proxy" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                    <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                           TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Speed in Notification -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F06B6D4" Stroke="#4006B6D4" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE1E2;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Скорость в уведомлении" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Показывать скорость загрузки и отдачи в уведомлении"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="NotifSpeedSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Keep Device Awake (WakeLock) -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE3E7;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Держать устройство активным" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Удерживать WakeLock во время работы. Помогает на Xiaomi/HyperOS против засыпания туннеля."
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="WakeLockSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Fragmentation -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE322;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Фрагментирование" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Обход DPI через фрагментацию TLS пакетов"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="FragmentSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <!-- Fragmentation Options -->
+                        <VerticalStackLayout Padding="16,0,16,14" Spacing="10">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border WidthRequest="34" HeightRequest="34" StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="#1F10B981" StrokeThickness="0" VerticalOptions="Center">
+                                    <Label Text="&#xE8B8;" FontFamily="MaterialIcons" FontSize="17"
+                                           TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="Packets" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" Padding="12,7" VerticalOptions="Center">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFragmentPacketsClicked" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label x:Name="FragmentPacketsLabel" Text="tlshello" FontSize="13" FontAttributes="Bold"
+                                               TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                        <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="Length (байт)" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="FragmentLengthEntry" Placeholder="100-200" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="Interval (мс)" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="FragmentIntervalEntry" Placeholder="10-20" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Noises -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE838;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Noises (UDP шум)" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Отправлять шумовые пакеты перед данными"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="NoisesSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <!-- Noises Options -->
+                        <VerticalStackLayout Padding="16,0,16,14" Spacing="10">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border WidthRequest="34" HeightRequest="34" StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="#24F59E0B" StrokeThickness="0" VerticalOptions="Center">
+                                    <Label Text="&#xE8B8;" FontFamily="MaterialIcons" FontSize="17"
+                                           TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="Type" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" Padding="12,7" VerticalOptions="Center">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnNoiseTypeClicked" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label x:Name="NoiseTypeLabel" Text="rand" FontSize="13" FontAttributes="Bold"
+                                               TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                        <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="Packet" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="NoisePacketEntry" Placeholder="50-100" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="Delay (мс)" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="NoiseDelayEntry" Placeholder="10-15" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Multiplexing (Mux) -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE640;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Мультиплексирование (Mux)" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Объединение соединений в один канал"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="MuxSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <VerticalStackLayout Padding="16,0,16,14" Spacing="10">
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="Concurrency" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="MuxConcurrencyEntry" Placeholder="8" Keyboard="Numeric" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="*,140" Padding="48,0,0,0" ColumnSpacing="12">
+                                <Label Text="XUDP Concurrency" FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                       VerticalOptions="Center" />
+                                <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                    <Entry x:Name="MuxXudpConcurrencyEntry" Placeholder="16" Keyboard="Numeric" FontSize="13"
+                                           BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                           PlaceholderColor="{DynamicResource M3Outline}"
+                                           VerticalOptions="Center" VerticalTextAlignment="Center" />
+                                </Border>
+                            </Grid>
+
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                <Border WidthRequest="34" HeightRequest="34" StrokeShape="RoundRectangle 10"
+                                        BackgroundColor="#247C4DFF" StrokeThickness="0" VerticalOptions="Center">
+                                    <Label Text="&#xE8B8;" FontFamily="MaterialIcons" FontSize="17"
+                                           TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Grid.Column="1" Text="XUDP Proxy UDP443" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                        StrokeThickness="1" Padding="12,7" VerticalOptions="Center">
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnMuxXudpQuicClicked" />
+                                    </Border.GestureRecognizers>
+                                    <HorizontalStackLayout Spacing="6">
+                                        <Label x:Name="MuxXudpQuicLabel" Text="reject" FontSize="13" FontAttributes="Bold"
+                                               TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                        <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- IP Type -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnIpTypeClicked" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F06B6D4" Stroke="#4006B6D4" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE894;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Тип IP" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" Padding="12,7" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Label x:Name="IpTypeLabel" Text="Авто" FontSize="13" FontAttributes="Bold"
+                                           TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                                    <Label Text="&#xE313;" FontFamily="MaterialIcons" FontSize="16"
+                                           TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- DNS -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDnsClicked" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE2C2;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="DNS" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label x:Name="DnsValueLabel" Text="Cloudflare (1.1.1.1)" FontSize="12"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="&#xE313;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Tunnel MTU -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMtuClicked" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE328;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="MTU туннеля" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label x:Name="MtuValueLabel" Text="Авто (1500)" FontSize="12"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="&#xE313;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Card 2: Memory Limit (GOMEMLIMIT) -->
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 22" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="16">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE322;" FontFamily="MaterialIcons" FontSize="16"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Память" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label x:Name="MemorySubtitleLabel" Text="Предел 60 MB" FontSize="12"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+                            <Border x:Name="Mem40Btn" StrokeShape="RoundRectangle 12" Padding="0,10"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainerHigh}" StrokeThickness="1"
+                                    Stroke="{DynamicResource M3OutlineVariantBrush}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMem40Clicked" />
+                                </Border.GestureRecognizers>
+                                <Label x:Name="Mem40Label" Text="40 MB" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </Border>
+                            <Border Grid.Column="1" x:Name="Mem60Btn" StrokeShape="RoundRectangle 12" Padding="0,10"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainerHigh}" StrokeThickness="1"
+                                    Stroke="{DynamicResource M3OutlineVariantBrush}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMem60Clicked" />
+                                </Border.GestureRecognizers>
+                                <Label x:Name="Mem60Label" Text="60 MB" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </Border>
+                            <Border Grid.Column="2" x:Name="Mem80Btn" StrokeShape="RoundRectangle 12" Padding="0,10"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainerHigh}" StrokeThickness="1"
+                                    Stroke="{DynamicResource M3OutlineVariantBrush}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMem80Clicked" />
+                                </Border.GestureRecognizers>
+                                <Label x:Name="Mem80Label" Text="80 MB" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </Border>
+                            <Border Grid.Column="3" x:Name="Mem100Btn" StrokeShape="RoundRectangle 12" Padding="0,10"
+                                    BackgroundColor="{DynamicResource M3SurfaceContainerHigh}" StrokeThickness="1"
+                                    Stroke="{DynamicResource M3OutlineVariantBrush}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnMem100Clicked" />
+                                </Border.GestureRecognizers>
+                                <Label x:Name="Mem100Label" Text="100 MB" FontSize="13" FontAttributes="Bold"
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" />
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                <Label Text="Снять ограничение" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Для мощных устройств. Больше памяти — стабильнее при высокой нагрузке."
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" x:Name="MemUnlimitedSwitch"
+                                    Toggled="OnMemUnlimitedToggled"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Card 3: Proxy-Only Mode (Hide VPN Icon) -->
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 22" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="16,14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                VerticalOptions="Center">
+                            <Label Text="&#xE898;" FontFamily="MaterialIcons" FontSize="19"
+                                   TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="Скрыть значок (Proxy-only)" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" />
+                            <Label Text="Запускать локальный HTTP/SOCKS5 прокси без TUN-интерфейса. Работают приложения с настройкой прокси вручную."
+                                   FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" x:Name="ProxyOnlySwitch"
+                                Toggled="OnProxyOnlyToggled"
+                                OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Card 4: SOCKS5 & HTTP Proxy Credentials / Ports / UDP -->
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 22" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- SOCKS5 Auth Switch -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24EF4444" Stroke="#44EF4444" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE897;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Red}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="SOCKS5 авторизация" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Защищает локальный SOCKS5 прокси логином и паролем от сканирования портов"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="SocksAuthSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Login -->
+                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="16,12" ColumnSpacing="10">
+                            <Label Text="Логин" FontSize="14" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1" x:Name="ProxyUserLabel" Text="hivox_user" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 9"
+                                    BackgroundColor="Transparent" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCopyUserClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="&#xE14D;" FontFamily="MaterialIcons" FontSize="17"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.25" Margin="16,0" />
+
+                        <!-- Password -->
+                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="16,12" ColumnSpacing="10">
+                            <Label Text="Пароль" FontSize="14" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1" x:Name="ProxyPassLabel" Text="••••••••••••" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 9"
+                                    BackgroundColor="Transparent" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCopyPasswordClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="&#xE14D;" FontFamily="MaterialIcons" FontSize="17"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.25" Margin="16,0" />
+
+                        <!-- Listen Address -->
+                        <Grid ColumnDefinitions="*,Auto,Auto" Padding="16,12" ColumnSpacing="10">
+                            <Label Text="Адрес" FontSize="14" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1" x:Name="ProxyAddressLabel" Text="127.0.0.1" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 9"
+                                    BackgroundColor="Transparent" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCopyAddressClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="&#xE14D;" FontFamily="MaterialIcons" FontSize="17"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.25" Margin="16,0" />
+
+                        <!-- SOCKS5 Port -->
+                        <Grid ColumnDefinitions="*,110,Auto" Padding="16,12" ColumnSpacing="10">
+                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                <Label Text="SOCKS5 порт" FontSize="14" TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="1024–65535, по умолчанию 10808" FontSize="11"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                <Entry x:Name="SocksPortEntry" Keyboard="Numeric" FontSize="14"
+                                       BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                       VerticalOptions="Center" VerticalTextAlignment="Center" />
+                            </Border>
+                            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 9"
+                                    BackgroundColor="Transparent" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCopySocksPortClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="&#xE14D;" FontFamily="MaterialIcons" FontSize="17"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.25" Margin="16,0" />
+
+                        <!-- HTTP Port -->
+                        <Grid ColumnDefinitions="*,110,Auto" Padding="16,12" ColumnSpacing="10">
+                            <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                                <Label Text="HTTP порт" FontSize="14" TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="1024–65535, по умолчанию 10809" FontSize="11"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Border Grid.Column="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    StrokeShape="RoundRectangle 12" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" HeightRequest="42" Padding="10,0">
+                                <Entry x:Name="HttpPortEntry" Keyboard="Numeric" FontSize="14"
+                                       BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                       VerticalOptions="Center" VerticalTextAlignment="Center" />
+                            </Border>
+                            <Border Grid.Column="2" WidthRequest="32" HeightRequest="32" StrokeShape="RoundRectangle 9"
+                                    BackgroundColor="Transparent" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCopyHttpPortClicked" />
+                                </Border.GestureRecognizers>
+                                <Label Text="&#xE14D;" FontFamily="MaterialIcons" FontSize="17"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+
+                        <!-- Reset login/password -->
+                        <HorizontalStackLayout Padding="16,10,16,14" Spacing="8">
+                            <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnResetProxyCredentialsClicked" />
+                            </HorizontalStackLayout.GestureRecognizers>
+                            <Label Text="&#xE5D5;" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                            <Label Text="Сбросить логин/пароль" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- Block UDP -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE14B;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="Блокировать UDP" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Отключает QUIC, DNS-over-UDP и голосовые звонки по UDP. Включайте только при необходимости."
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="BlockUdpSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="16,0" />
+
+                        <!-- HTTP Proxy Auth in Hotspot -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,14" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE897;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                                <Label Text="HTTP-прокси авторизация" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Защитить HTTP-прокси теми же логином и паролем при включённом доступе через хотспот"
+                                       FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" x:Name="HttpAuthHotspotSwitch"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Card 5: Domain-only routing (routeOnly) -->
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 22" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="16,14">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                VerticalOptions="Center">
+                            <Label Text="&#xE52E;" FontFamily="MaterialIcons" FontSize="19"
+                                   TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="Маршрутизация по домену (routeOnly)" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" />
+                            <Label Text="Использовать SNI/Host из сниффинга только для выбора маршрута, не подменяя IP назначения"
+                                   FontSize="12" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.15" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2" x:Name="RouteOnlySwitch"
+                                OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

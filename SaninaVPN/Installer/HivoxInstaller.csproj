@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>HivoxInstaller</RootNamespace>
+    <AssemblyName>Hivox-Setup-v2.1.1-win-x64</AssemblyName>
+    <AssemblyTitle>Hivox Setup</AssemblyTitle>
+    <Product>Hivox Installer</Product>
+    <Version>2.1.1</Version>
+    <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+    <ApplicationIcon>..\Assets\Hivox.ico</ApplicationIcon>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\github-release\_payload\HivoxPayload.zip" Condition="Exists('..\github-release\_payload\HivoxPayload.zip')">
+      <LogicalName>Hivox.Payload.zip</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

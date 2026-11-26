@@ -1,0 +1,96 @@
+<UserControl x:Class="Hivox.Views.ConnectionCheckPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer Style="{StaticResource M3ScrollViewer}">
+        <StackPanel Margin="0,0,0,28">
+            <!-- Summary Banner -->
+            <Border CornerRadius="18" Background="{DynamicResource M3SurfaceContainerBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="16" Margin="0,6,0,14">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SummaryBadge" Grid.Column="0" Width="40" Height="40" CornerRadius="20"
+                            Background="{DynamicResource M3PrimaryContainerBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Margin="0,0,14,0" VerticalAlignment="Center">
+                        <Path x:Name="SummaryIcon" Data="{StaticResource IconShield}" Width="18" Height="18" Stretch="Uniform"
+                              Fill="{DynamicResource M3PrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="SummaryTitle" Text="Выполняется проверка..." FontSize="15" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBlock x:Name="SummarySubtitle" Text="Проверяем IP, DNS и задержку" FontSize="12" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="0,2,0,0"/>
+                    </StackPanel>
+                    <Button x:Name="HeaderRefreshBtn" Grid.Column="2" Width="36" Height="36" Style="{StaticResource M3CircleIconBtn}" Click="Refresh_Click" ToolTip="Повторить проверку">
+                        <Path Data="{StaticResource IconRefresh}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- 1. External IP & Location -->
+            <TextBlock Text="ВНЕШНИЙ IP И ЛОКАЦИЯ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}" Padding="16,12">
+                <StackPanel>
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="Внешний IP" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="IpValueText" Text="..." FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Локация / Провайдер" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="LocationValueText" Text="..." FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" MaxWidth="360"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 2. DNS -->
+            <TextBlock Text="DNS И МАРШРУТИЗАЦИЯ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}" Padding="16,12">
+                <StackPanel>
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="Настроенный DNS" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="ConfiguredDnsText" Text="1.1.1.1" FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="DNS-резолвинг (DoH)" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="DnsCheckText" Text="..." FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 3. Latency -->
+            <TextBlock Text="ЗАДЕРЖКА (PING)" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}" Padding="16,12">
+                <StackPanel>
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="TCP к узлу" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="TcpPingText" Text="..." FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Реальная задержка (HTTP 204)" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="RealPingText" Text="..." FontSize="13.5" FontWeight="Bold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- 4. Core & Server -->
+            <TextBlock Text="СОСТОЯНИЕ ЯДРА И ТУННЕЛЯ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}" Padding="16,12">
+                <StackPanel>
+                    <Grid Margin="0,0,0,8">
+                        <TextBlock Text="Режим и ядро" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="CoreStateText" Text="..." FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Выбранный узел" FontSize="13" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                        <TextBlock x:Name="ServerStateText" Text="—" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}" HorizontalAlignment="Right" TextTrimming="CharacterEllipsis" MaxWidth="360"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button x:Name="RetryBtn" Style="{StaticResource M3FilledBtn}" Height="40" Padding="20,0" Margin="0,0,8,0" Click="Refresh_Click" Content="Повторить проверку"/>
+                <Button Style="{StaticResource M3TonalBtn}" Height="40" Padding="18,0" Margin="0,0,8,0" Click="CopyReport_Click" Content="Копировать отчёт"/>
+                <Button Style="{StaticResource M3TonalBtn}" Height="40" Padding="18,0" Click="OpenDiagnostics_Click" Content="Тест скорости / DNS"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

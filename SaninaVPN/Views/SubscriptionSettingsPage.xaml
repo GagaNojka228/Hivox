@@ -1,0 +1,55 @@
+<UserControl x:Class="Hivox.Views.SubscriptionSettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hivox.Controls">
+    <ScrollViewer Style="{StaticResource M3ScrollViewer}">
+        <StackPanel Margin="0,0,0,24">
+            <TextBlock Text="ОБНОВЛЕНИЕ ПОДПИСОК" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="AutoUpdRow" Label="Автоматическое обновление" Subtitle="Периодическая загрузка актуальных серверов" IconData="{StaticResource IconRefresh}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="IntervalRow" Label="Интервал обновления (часы)" IconData="{StaticResource IconTune}" ValueText="6" IsLink="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="NotifyRow" Label="Уведомления в трее" Subtitle="Показывать сообщение после обновления" IconData="{StaticResource IconInfo}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="TimeoutRow" Label="Таймаут запроса" IconData="{StaticResource IconSpeed}" ValueText="9 сек." IsLink="True"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="ПРИ ЗАПУСКЕ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="UpdOnOpenRow" Label="Обновлять при открытии" IconData="{StaticResource IconImport}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="PingOnOpenRow" Label="Проверять пинг при открытии" IconData="{StaticResource IconPulse}" IsToggle="True" IsChecked="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="ConnOnOpenRow" Label="Автоподключение при запуске" IconData="{StaticResource IconBolt}" IsToggle="True"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="СПИСОК И ИДЕНТИФИКАЦИЯ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="NoDuplRow" Label="Фильтр дубликатов" Subtitle="Удалять совпадающие конфигурации" IconData="{StaticResource IconLayers}" IsToggle="True" IsChecked="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="CollapseRow" Label="Сворачивание подписок" IconData="{StaticResource IconSort}" IsToggle="True" IsChecked="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="HwidRow" Label="Передавать HWID" Subtitle="Отправка идентификатора устройства в заголовках" IconData="{StaticResource IconShield}" IsToggle="True" IsChecked="True"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="СОРТИРОВКА" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <local:M3SettingsRow x:Name="SortRow" Label="Сортировка серверов" IconData="{StaticResource IconSort}" ValueText="Без сортировки" IsLink="True"/>
+            </Border>
+
+            <Button Style="{StaticResource M3FilledBtn}" Width="168" Height="42" Margin="0,20,0,0" HorizontalAlignment="Center" Click="Save_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconSave}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Сохранить"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

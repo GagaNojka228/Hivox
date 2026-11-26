@@ -1,0 +1,227 @@
+<UserControl x:Class="Hivox.Views.TunnelSettingsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hivox.Controls">
+    <ScrollViewer Style="{StaticResource M3ScrollViewer}">
+        <StackPanel Margin="0,0,0,28">
+            <!-- DNS & MTU -->
+            <TextBlock Text="DNS И MTU ТУННЕЛЯ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}" Padding="16,14">
+                <StackPanel>
+                    <TextBlock Text="DNS-сервер (для удалённого резолвинга)" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}" Margin="0,0,0,8"/>
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton x:Name="DnsCloudflareRadio" Grid.Column="0" GroupName="DnsPreset" Style="{StaticResource M3SegmentedBtn}" Content="Cloudflare" Checked="DnsPreset_Checked"/>
+                        <RadioButton x:Name="DnsGoogleRadio" Grid.Column="2" GroupName="DnsPreset" Style="{StaticResource M3SegmentedBtn}" Content="Google" Checked="DnsPreset_Checked"/>
+                        <RadioButton x:Name="DnsQuad9Radio" Grid.Column="4" GroupName="DnsPreset" Style="{StaticResource M3SegmentedBtn}" Content="Quad9" Checked="DnsPreset_Checked"/>
+                        <RadioButton x:Name="DnsAdGuardRadio" Grid.Column="6" GroupName="DnsPreset" Style="{StaticResource M3SegmentedBtn}" Content="AdGuard" Checked="DnsPreset_Checked"/>
+                    </Grid>
+                    <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="12,8" Margin="0,0,0,14">
+                        <TextBox x:Name="CustomDnsBox" Background="Transparent" BorderThickness="0" Padding="0"
+                                 Foreground="{DynamicResource M3OnSurfaceBrush}" CaretBrush="{DynamicResource M3PrimaryBrush}"
+                                 FontSize="12.5" FontWeight="Medium"/>
+                    </Border>
+
+                    <TextBlock Text="MTU туннеля (TUN)" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}" Margin="0,0,0,8"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="6"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <RadioButton x:Name="Mtu1420Radio" Grid.Column="0" GroupName="TunMtuGroup" Style="{StaticResource M3SegmentedBtn}" Content="1420 (Авто)"/>
+                        <RadioButton x:Name="Mtu1500Radio" Grid.Column="2" GroupName="TunMtuGroup" Style="{StaticResource M3SegmentedBtn}" Content="1500"/>
+                        <RadioButton x:Name="Mtu1400Radio" Grid.Column="4" GroupName="TunMtuGroup" Style="{StaticResource M3SegmentedBtn}" Content="1400"/>
+                        <RadioButton x:Name="Mtu1280Radio" Grid.Column="6" GroupName="TunMtuGroup" Style="{StaticResource M3SegmentedBtn}" Content="1280"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- TLS Fragmentation -->
+            <TextBlock Text="ОБХОД DPI: ФРАГМЕНТАЦИЯ (XRAY)" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="FragmentRow" Label="TLS Фрагментация" Subtitle="Разбиение TLS ClientHello для обхода DPI" IconData="{StaticResource IconTune}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <StackPanel Margin="16,12">
+                        <TextBlock Text="Packets" FontSize="12" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="0,0,0,6"/>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton x:Name="FragTlsHelloRadio" Grid.Column="0" GroupName="FragPackets" Style="{StaticResource M3SegmentedBtn}" Content="tlshello"/>
+                            <RadioButton x:Name="Frag13Radio" Grid.Column="2" GroupName="FragPackets" Style="{StaticResource M3SegmentedBtn}" Content="1-3"/>
+                            <RadioButton x:Name="Frag15Radio" Grid.Column="4" GroupName="FragPackets" Style="{StaticResource M3SegmentedBtn}" Content="1-5"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Length (байт)" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="FragLengthBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Interval (мс)" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="FragIntervalBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Noises (UDP Noise) -->
+            <TextBlock Text="NOISES (UDP ШУМ, XRAY)" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="NoisesRow" Label="Noises (UDP шум)" Subtitle="Отправлять шумовые пакеты перед полезной нагрузкой" IconData="{StaticResource IconPulse}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <StackPanel Margin="16,12">
+                        <TextBlock Text="Type" FontSize="12" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="0,0,0,6"/>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton x:Name="NoiseRandRadio" Grid.Column="0" GroupName="NoiseTypeGroup" Style="{StaticResource M3SegmentedBtn}" Content="rand"/>
+                            <RadioButton x:Name="NoiseStrRadio" Grid.Column="2" GroupName="NoiseTypeGroup" Style="{StaticResource M3SegmentedBtn}" Content="str"/>
+                            <RadioButton x:Name="NoiseBase64Radio" Grid.Column="4" GroupName="NoiseTypeGroup" Style="{StaticResource M3SegmentedBtn}" Content="base64"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Packet" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="NoisePacketBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Delay (мс)" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="NoiseDelayBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Multiplexing (Mux) -->
+            <TextBlock Text="МУЛЬТИПЛЕКСИРОВАНИЕ (MUX)" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="MuxRow" Label="Мультиплексирование (Mux)" Subtitle="Объединение нескольких TCP-потоков в одно соединение" IconData="{StaticResource IconLayers}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <StackPanel Margin="16,12">
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Concurrency (1–64)" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="MuxConcBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="XUDP Concurrency (1–128)" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="2,0,0,4"/>
+                                <Border CornerRadius="12" Background="{DynamicResource M3SurfaceContainerHighBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="10,7">
+                                    <TextBox x:Name="MuxXudpConcBox" Background="Transparent" BorderThickness="0" Padding="0" FontSize="12.5" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                        <TextBlock Text="XUDP Proxy UDP443" FontSize="12" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="0,0,0,6"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <RadioButton x:Name="QuicRejectRadio" Grid.Column="0" GroupName="MuxQuicGroup" Style="{StaticResource M3SegmentedBtn}" Content="reject"/>
+                            <RadioButton x:Name="QuicAllowRadio" Grid.Column="2" GroupName="MuxQuicGroup" Style="{StaticResource M3SegmentedBtn}" Content="allow"/>
+                            <RadioButton x:Name="QuicSkipRadio" Grid.Column="4" GroupName="MuxQuicGroup" Style="{StaticResource M3SegmentedBtn}" Content="skip"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Routing & Sniffing -->
+            <TextBlock Text="МАРШРУТИЗАЦИЯ И СНИФФИНГ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="SniffRouteOnlyRow" Label="Sniffing только для маршрутизации" Subtitle="Определять домен для правил, не подменяя адрес назначения (routeOnly)" IconData="{StaticResource IconSearch}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="BlockUdpRow" Label="Блокировать UDP трафик" Subtitle="Отклонять исходящий UDP-трафик (кроме DNS)" IconData="{StaticResource IconBolt}" IsToggle="True"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Proxy Authentication -->
+            <TextBlock Text="АВТОРИЗАЦИЯ ЛОКАЛЬНОГО ПРОКСИ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="SocksAuthRow" Label="SOCKS5 авторизация" Subtitle="Защищать локальный SOCKS5 прокси логином и паролем" IconData="{StaticResource IconLock}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="HttpAuthHotspotRow" Label="HTTP авторизация при Allow LAN" Subtitle="Требовать логин/пароль при подключении из локальной сети" IconData="{StaticResource IconShield}" IsToggle="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <Grid Margin="16,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock x:Name="ProxyUserText" Text="Логин: hivox_..." FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                            <TextBlock x:Name="ProxyPassText" Text="Пароль: ••••••••" FontSize="11.5" Foreground="{DynamicResource M3OnSurfaceVariantBrush}" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Width="34" Height="34" Style="{StaticResource M3CircleIconBtn}" Click="CopyCreds_Click" ToolTip="Копировать логин и пароль" Margin="0,0,6,0">
+                            <Path Data="{StaticResource IconCopy}" Width="14" Height="14" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                        </Button>
+                        <Button Grid.Column="2" Width="34" Height="34" Style="{StaticResource M3CircleIconBtn}" Click="RegenCreds_Click" ToolTip="Сгенерировать новый логин и пароль">
+                            <Path Data="{StaticResource IconRefresh}" Width="14" Height="14" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Button Style="{StaticResource M3FilledBtn}" Width="176" Height="42" Margin="0,20,0,0" HorizontalAlignment="Center" Click="Save_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconSave}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Сохранить"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="Hivox.Mobile.Views.QrScannerPage"
+             BackgroundColor="#000000"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Camera Preview (Background across middle/full) -->
+        <zxing:CameraBarcodeReaderView x:Name="BarcodeReader"
+                                       Grid.RowSpan="3"
+                                       IsDetecting="False"
+                                       BarcodesDetected="OnBarcodesDetected"
+                                       VerticalOptions="Fill"
+                                       HorizontalOptions="Fill" />
+
+        <!-- Top Controls Overlay -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,18,16,12" ColumnSpacing="12"
+              BackgroundColor="#880D0817">
+            <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                    Stroke="#4DFFFFFF" StrokeThickness="1" BackgroundColor="#66140D22">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCloseTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="19" FontFamily="MaterialIcons"
+                       TextColor="#FFFFFF" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <Label Grid.Column="1" Text="Сканер QR-кода" FontSize="19" FontAttributes="Bold"
+                   TextColor="#FFFFFF" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+            <Border x:Name="TorchBtn" Grid.Column="2" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20"
+                    Stroke="#4DFFFFFF" StrokeThickness="1" BackgroundColor="#66140D22">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTorchTapped" />
+                </Border.GestureRecognizers>
+                <Label x:Name="TorchIcon" Text="&#xE3E6;" FontSize="19" FontFamily="MaterialIcons"
+                       TextColor="#FFFFFF" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <!-- Center Viewfinder Reticle -->
+        <Grid Grid.Row="1" InputTransparent="True">
+            <Border WidthRequest="248" HeightRequest="248"
+                    StrokeShape="RoundRectangle 28"
+                    Stroke="{DynamicResource M3SecondaryBrush}"
+                    StrokeThickness="3"
+                    BackgroundColor="#12000000"
+                    HorizontalOptions="Center" VerticalOptions="Center" />
+            <Label x:Name="PermissionHintLabel"
+                   IsVisible="False"
+                   Text="Доступ к камере не выдан.\nВы можете выбрать картинку с QR-кодом из галереи ниже."
+                   FontSize="13.5" FontAttributes="Bold"
+                   TextColor="#FFFFFF"
+                   BackgroundColor="#AA140D22"
+                   Padding="18,12"
+                   HorizontalTextAlignment="Center"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   MaximumWidthRequest="280" />
+        </Grid>
+
+        <!-- Bottom Action Bar -->
+        <VerticalStackLayout Grid.Row="2" Spacing="12" Padding="20,16,20,28" BackgroundColor="#CC0D0817">
+            <Label Text="Наведите камеру на QR-код подписки или сервера (vless://, vmess://, trojan://, ss://, hy2://, https://)"
+                   FontSize="12.5" TextColor="#D0C7E6" HorizontalTextAlignment="Center" />
+
+            <Border HeightRequest="48" StrokeShape="RoundRectangle 18"
+                    Stroke="{DynamicResource M3PrimaryBrush}" StrokeThickness="1.2"
+                    BackgroundColor="{DynamicResource M3PrimaryContainer}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPickFromGalleryTapped" />
+                </Border.GestureRecognizers>
+                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                    <Label Text="&#xE3F4;" FontSize="20" FontFamily="MaterialIcons"
+                           TextColor="{DynamicResource M3Secondary}" VerticalOptions="Center" />
+                    <Label Text="Выбрать фото из галереи" FontSize="14.5" FontAttributes="Bold"
+                           TextColor="{DynamicResource M3OnPrimaryContainer}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

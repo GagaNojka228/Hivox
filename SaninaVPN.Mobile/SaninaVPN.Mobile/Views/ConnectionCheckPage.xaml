@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Hivox.Mobile.Views.ConnectionCheckPage"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <Label Grid.Column="1" Text="Проверить соединение" FontSize="19" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+            <Border Grid.Column="2" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRefreshTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5D5;" FontSize="19" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3Primary}"
+                       HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14" Padding="18,4,18,32">
+
+                <!-- Overall Summary Banner -->
+                <Border x:Name="SummaryBanner" StrokeShape="RoundRectangle 20" StrokeThickness="1"
+                        Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        BackgroundColor="{DynamicResource M3SurfaceContainer}" Padding="16">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Border x:Name="SummaryBadge" Grid.Column="0" WidthRequest="42" HeightRequest="42"
+                                StrokeShape="RoundRectangle 13" StrokeThickness="1" VerticalOptions="Center">
+                            <Label x:Name="SummaryIcon" Text="&#xE1D8;" FontSize="21" FontFamily="MaterialIcons"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label x:Name="SummaryTitle" Text="Выполняется проверка..." FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" />
+                            <Label x:Name="SummarySubtitle" Text="Проверяем IP, DNS и задержку" FontSize="12"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                        </VerticalStackLayout>
+                        <ActivityIndicator x:Name="CheckSpinner" Grid.Column="2" IsRunning="True"
+                                           Color="{DynamicResource M3Primary}" WidthRequest="22" HeightRequest="22"
+                                           VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- 1. IP & Location Card -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="&#xE894;" FontSize="18" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Cyan}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="ВНЕШНИЙ IP И ЛОКАЦИЯ" FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Внешний IP" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="IpValueLabel" Grid.Column="1" Text="..." FontSize="14.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Локация / Провайдер" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="LocationValueLabel" Grid.Column="1" Text="..." FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" HorizontalTextAlignment="End" MaximumWidthRequest="200" LineBreakMode="TailTruncation" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 2. DNS Card -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="&#xE2C2;" FontSize="18" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="DNS И МАРШРУТИЗАЦИЯ" FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Настроенный DNS" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="ConfiguredDnsLabel" Grid.Column="1" Text="1.1.1.1" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="DNS-резолвинг" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="DnsCheckLabel" Grid.Column="1" Text="..." FontSize="13.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 3. Latency Card -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="&#xE1E2;" FontSize="18" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Green}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="ЗАДЕРЖКА (PING)" FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="TCP к узлу" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="TcpPingLabel" Grid.Column="1" Text="..." FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Реальная задержка (HTTP 204)" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="RealPingLabel" Grid.Column="1" Text="..." FontSize="14" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 4. Core & Tunnel Card -->
+                <Border Style="{StaticResource M3Card}" Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label Text="&#xE53B;" FontSize="18" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Amber}" VerticalOptions="Center" />
+                            <Label Grid.Column="1" Text="СОСТОЯНИЕ ЯДРА И ТУННЕЛЯ" FontSize="11" FontAttributes="Bold"
+                                   CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Режим / Ядро / TUN" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="CoreStateLabel" Grid.Column="1" Text="..." FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                            <Label Text="Выбранный узел" FontSize="13.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label x:Name="ServerStateLabel" Grid.Column="1" Text="—" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" HorizontalTextAlignment="End" MaximumWidthRequest="190" LineBreakMode="TailTruncation" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Actions -->
+                <Button x:Name="RetryBtn"
+                        Text="Повторить проверку"
+                        Style="{StaticResource M3FilledBtn}"
+                        HeightRequest="46"
+                        Clicked="OnRetryClicked" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Button Grid.Column="0"
+                            Text="Скопировать отчёт"
+                            Style="{StaticResource M3TonalBtn}"
+                            Clicked="OnCopyReportClicked" />
+                    <Button Grid.Column="1"
+                            Text="Логи туннеля"
+                            Style="{StaticResource M3TonalBtn}"
+                            Clicked="OnOpenLogsClicked" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

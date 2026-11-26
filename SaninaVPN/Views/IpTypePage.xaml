@@ -1,0 +1,52 @@
+<UserControl x:Class="Hivox.Views.IpTypePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Margin="0,0,0,24">
+        <TextBlock Text="ПРЕДПОЧИТАЕМЫЙ ТИП IP" Style="{StaticResource M3SectionTitle}"/>
+        <Border Style="{StaticResource M3SettingsSection}">
+            <StackPanel>
+                <Grid MinHeight="54" Cursor="Hand" MouseLeftButtonDown="Auto_Click" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center" Margin="16,8">
+                        <TextBlock Text="Auto" FontSize="13" FontWeight="Medium" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBlock Text="Автоматический выбор IPv4 или IPv6" FontSize="11" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                    </StackPanel>
+                    <RadioButton x:Name="AutoRadio" Grid.Column="1" GroupName="IpType" VerticalAlignment="Center" IsChecked="True" Margin="0,0,14,0"/>
+                </Grid>
+                <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="16,0" Opacity="0.5"/>
+                <Grid MinHeight="54" Cursor="Hand" MouseLeftButtonDown="Ipv4_Click" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center" Margin="16,8">
+                        <TextBlock Text="IPv4" FontSize="13" FontWeight="Medium" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBlock Text="Предпочитать только IPv4-адреса" FontSize="11" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                    </StackPanel>
+                    <RadioButton x:Name="Ipv4Radio" Grid.Column="1" GroupName="IpType" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                </Grid>
+                <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="16,0" Opacity="0.5"/>
+                <Grid MinHeight="54" Cursor="Hand" MouseLeftButtonDown="Ipv6_Click" Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center" Margin="16,8">
+                        <TextBlock Text="IPv6" FontSize="13" FontWeight="Medium" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBlock Text="Предпочитать IPv6-адреса при наличии" FontSize="11" Foreground="{DynamicResource M3OnSurfaceVariantBrush}"/>
+                    </StackPanel>
+                    <RadioButton x:Name="Ipv6Radio" Grid.Column="1" GroupName="IpType" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Button Style="{StaticResource M3FilledBtn}" Width="168" Height="42" Margin="0,20,0,0" HorizontalAlignment="Center" Click="Save_Click">
+            <StackPanel Orientation="Horizontal">
+                <Path Data="{StaticResource IconSave}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                <TextBlock Text="Сохранить"/>
+            </StackPanel>
+        </Button>
+    </StackPanel>
+</UserControl>

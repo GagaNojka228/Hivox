@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:Hivox.Mobile.Views"
+       x:Class="Hivox.Mobile.AppShell"
+       Shell.NavBarIsVisible="False"
+       Shell.FlyoutBehavior="Disabled"
+       Shell.TabBarBackgroundColor="{DynamicResource M3TabBarBg}"
+       Shell.TabBarForegroundColor="{DynamicResource M3TabActive}"
+       Shell.TabBarTitleColor="{DynamicResource M3TabActive}"
+       Shell.TabBarUnselectedColor="{DynamicResource M3TabInactive}">
+
+    <TabBar>
+        <ShellContent Title="Главная"
+                      Route="connect"
+                      ContentTemplate="{DataTemplate views:ConnectionPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE88A;" Size="22"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="Серверы"
+                      Route="servers"
+                      ContentTemplate="{DataTemplate views:ServersPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE875;" Size="22"/>
+            </ShellContent.Icon>
+        </ShellContent>
+
+        <ShellContent Title="Настройки"
+                      Route="settings_tab"
+                      ContentTemplate="{DataTemplate views:SettingsPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons" Glyph="&#xE8B8;" Size="22"/>
+            </ShellContent.Icon>
+        </ShellContent>
+    </TabBar>
+</Shell>

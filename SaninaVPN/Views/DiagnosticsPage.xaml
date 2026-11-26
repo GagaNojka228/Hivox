@@ -1,0 +1,32 @@
+<UserControl x:Class="Hivox.Views.DiagnosticsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,14">
+            <Button x:Name="DnsTestBtn" Style="{StaticResource M3FilledBtn}" Height="40" Padding="18,0" Margin="0,0,10,0" Click="DnsTest_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconDns}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Тест DNS"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="SpeedTestBtn" Style="{StaticResource M3TonalBtn}" Height="40" Padding="18,0" Click="SpeedTest_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconSpeed}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Тест скорости"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <Border Grid.Row="1" CornerRadius="18" Background="{DynamicResource M3SurfaceContainerBrush}" BorderBrush="{DynamicResource M3OutlineVariantBrush}" BorderThickness="1" Padding="14">
+            <TextBox x:Name="ResultBox" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                     Foreground="{DynamicResource M3OnSurfaceBrush}" Background="Transparent"
+                     BorderThickness="0" Padding="0" VerticalContentAlignment="Top" TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"/>
+        </Border>
+    </Grid>
+</UserControl>

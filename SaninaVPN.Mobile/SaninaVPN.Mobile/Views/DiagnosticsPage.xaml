@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.DiagnosticsPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Диагностика сети" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Test Buttons + Result Box (PC Parity) -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10" Padding="20,0,20,10">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button x:Name="DnsTestBtn" Grid.Column="0" Text="Тест DNS"
+                        Style="{StaticResource M3FilledBtn}" Clicked="OnDnsTestClicked"/>
+                <Button x:Name="SpeedTestBtn" Grid.Column="1" Text="Тест скорости"
+                        Style="{StaticResource M3TonalBtn}" Clicked="OnSpeedTestClicked"/>
+            </Grid>
+
+            <Border Style="{StaticResource M3Card}" Padding="14">
+                <Label x:Name="DiagResultLabel"
+                       Text="Нажмите «Тест DNS» или «Тест скорости» (10 МБ через прокси)."
+                       FontSize="12.5" TextColor="{DynamicResource M3OnSurface}"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- Logs View -->
+        <Border Grid.Row="2" Margin="20,0,20,10" Padding="12"
+                StrokeShape="RoundRectangle 18"
+                Stroke="{DynamicResource M3OutlineVariantBrush}"
+                StrokeThickness="1"
+                BackgroundColor="{DynamicResource M3SurfaceContainerLow}">
+            <ScrollView>
+                <Label Text="{Binding LogsText}" FontSize="11" FontFamily="monospace"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+            </ScrollView>
+        </Border>
+
+        <!-- Log Controls -->
+        <Grid Grid.Row="3" Padding="20,8,20,16" ColumnDefinitions="*,*,*" ColumnSpacing="8">
+            <Button Grid.Column="0" Text="Обновить" Style="{StaticResource M3TonalBtn}"
+                    Padding="8,0" FontSize="12.5" Command="{Binding RefreshLogsCommand}"/>
+            <Button Grid.Column="1" Text="Копировать" Style="{StaticResource M3TonalBtn}"
+                    Padding="8,0" FontSize="12.5" Clicked="OnCopyLogsClicked"/>
+            <Button Grid.Column="2" Text="Очистить" Style="{StaticResource M3TonalBtn}"
+                    Padding="8,0" FontSize="12.5" Clicked="OnClearLogsClicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

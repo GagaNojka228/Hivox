@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Shield outer silhouette (evenOdd cutout for crisp Hivox H) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M12,2L4,5.5V11.2C4,16.55 7.41,21.5 12,23C16.59,21.5 20,16.55 20,11.2V5.5L12,2ZM8,7.8H10.2V11.1H13.8V7.8H16V16.8H13.8V13.1H10.2V16.8H8V7.8Z" />
+</vector>

@@ -1,0 +1,309 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v2.1.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - name: Determine release tag and version
+        id: meta
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Preparing release ${TAG} (version ${VERSION})"
+
+  build-windows:
+    needs: prepare
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    env:
+      TAG: ${{ needs.prepare.outputs.tag }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish Windows Portable (win-x64)
+        shell: pwsh
+        run: |
+          dotnet publish SaninaVPN/Hivox.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:DebugType=none `
+            -p:DebugSymbols=false `
+            -p:Version="$env:VERSION" `
+            -o SaninaVPN/publish-win-x64
+
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          $portableZip = "dist/Hivox-Portable-$($env:TAG)-win-x64.zip"
+          Compress-Archive -Path "SaninaVPN/publish-win-x64/Hivox.exe" -DestinationPath $portableZip -CompressionLevel Optimal -Force
+
+      - name: Publish Windows Setup Installer (win-x64)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path "SaninaVPN/github-release/_payload" | Out-Null
+          Copy-Item "dist/Hivox-Portable-$($env:TAG)-win-x64.zip" "SaninaVPN/github-release/_payload/HivoxPayload.zip" -Force
+
+          dotnet publish SaninaVPN/Installer/HivoxInstaller.csproj `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -p:DebugType=none `
+            -p:DebugSymbols=false `
+            -p:Version="$env:VERSION" `
+            -p:AssemblyName="Hivox-Setup-$($env:TAG)-win-x64" `
+            -o SaninaVPN/publish-installer
+
+          Copy-Item "SaninaVPN/publish-installer/Hivox-Setup-$($env:TAG)-win-x64.exe" "dist/Hivox-Setup-$($env:TAG)-win-x64.exe" -Force
+
+      - name: Generate build provenance attestations (Windows)
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            dist/Hivox-Setup-${{ needs.prepare.outputs.tag }}-win-x64.exe
+            dist/Hivox-Portable-${{ needs.prepare.outputs.tag }}-win-x64.zip
+
+      - name: Upload Windows release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: dist/*
+          if-no-files-found: error
+
+  build-android:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    env:
+      TAG: ${{ needs.prepare.outputs.tag }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install .NET MAUI Android workload
+        shell: bash
+        run: |
+          dotnet workload install maui-android
+
+      - name: Publish Android APK
+        shell: bash
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          SIGNING_ARGS=()
+          if [ -n "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "Using repository signing keystore from secrets."
+            echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > SaninaVPN.Mobile/SaninaVPN.Mobile/hivox-release.keystore
+            SIGNING_ARGS+=(
+              "-p:AndroidKeyStore=true"
+              "-p:AndroidSigningKeyStore=hivox-release.keystore"
+              "-p:AndroidSigningKeyAlias=${ANDROID_KEY_ALIAS}"
+              "-p:AndroidSigningKeyPass=${ANDROID_KEY_PASSWORD}"
+              "-p:AndroidSigningStorePass=${ANDROID_KEYSTORE_PASSWORD}"
+            )
+          else
+            echo "::warning::ANDROID_KEYSTORE_BASE64 secret is not configured; building APK with default CI signing key."
+          fi
+
+          dotnet publish SaninaVPN.Mobile/SaninaVPN.Mobile/SaninaVPN.Mobile.csproj \
+            -f net10.0-android \
+            -c Release \
+            -p:AndroidPackageFormat=apk \
+            -p:ApplicationDisplayVersion="${VERSION}" \
+            "${SIGNING_ARGS[@]}" \
+            -o SaninaVPN.Mobile/publish-android
+
+          rm -f SaninaVPN.Mobile/SaninaVPN.Mobile/hivox-release.keystore
+
+          mkdir -p dist
+          APK_FILE="$(find SaninaVPN.Mobile/publish-android -maxdepth 1 -name '*-Signed.apk' | head -n 1)"
+          if [ -z "$APK_FILE" ]; then
+            APK_FILE="$(find SaninaVPN.Mobile/publish-android -maxdepth 1 -name '*.apk' | head -n 1)"
+          fi
+          if [ -z "$APK_FILE" ]; then
+            echo "::error::No APK file found in SaninaVPN.Mobile/publish-android"
+            ls -la SaninaVPN.Mobile/publish-android
+            exit 1
+          fi
+
+          cp "$APK_FILE" "dist/Hivox-${TAG}-android.apk"
+          ls -lh "dist/Hivox-${TAG}-android.apk"
+
+      - name: Generate build provenance attestation (Android)
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist/Hivox-${{ needs.prepare.outputs.tag }}-android.apk
+
+      - name: Upload Android release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release
+          path: dist/*
+          if-no-files-found: error
+
+  release:
+    needs: [prepare, build-windows, build-android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      TAG: ${{ needs.prepare.outputs.tag }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-release
+          path: release-assets
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-release
+          path: release-assets
+
+      - name: Generate SHA256SUMS.txt
+        shell: bash
+        working-directory: release-assets
+        run: |
+          sha256sum \
+            "Hivox-Portable-${TAG}-win-x64.zip" \
+            "Hivox-Setup-${TAG}-win-x64.exe" \
+            "Hivox-${TAG}-android.apk" > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Generate build provenance attestation (SHA256SUMS)
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: release-assets/SHA256SUMS.txt
+
+      - name: Build release notes
+        shell: bash
+        run: |
+          SETUP_FILE="Hivox-Setup-${TAG}-win-x64.exe"
+          PORTABLE_FILE="Hivox-Portable-${TAG}-win-x64.zip"
+          APK_FILE="Hivox-${TAG}-android.apk"
+
+          SETUP_MB=$(awk "BEGIN {printf \"%.1f\", $(stat -c%s "release-assets/${SETUP_FILE}")/1048576}")
+          PORTABLE_MB=$(awk "BEGIN {printf \"%.1f\", $(stat -c%s "release-assets/${PORTABLE_FILE}")/1048576}")
+          APK_MB=$(awk "BEGIN {printf \"%.1f\", $(stat -c%s "release-assets/${APK_FILE}")/1048576}")
+          CHECKSUMS=$(cat release-assets/SHA256SUMS.txt)
+
+          REPO="${GITHUB_REPOSITORY}"
+          cat <<EOF > release-notes.md
+          ## 📦 Загрузки
+
+          | Платформа | Файл | Описание | Размер | Скачать |
+          | :--- | :--- | :--- | :---: | :---: |
+          | **Windows 10/11 (x64)** | \`${SETUP_FILE}\` | Установщик (рекомендуется) | ~${SETUP_MB} MB | [Скачать EXE](https://github.com/${REPO}/releases/download/${TAG}/${SETUP_FILE}) |
+          | **Windows 10/11 (x64)** | \`${PORTABLE_FILE}\` | Портативная версия | ~${PORTABLE_MB} MB | [Скачать ZIP](https://github.com/${REPO}/releases/download/${TAG}/${PORTABLE_FILE}) |
+          | **Android** | \`${APK_FILE}\` | Установочный APK | ~${APK_MB} MB | [Скачать APK](https://github.com/${REPO}/releases/download/${TAG}/${APK_FILE}) |
+
+          ---
+
+          ## ✨ Что нового в ${TAG}
+
+          - **Сборка в GitHub Actions + Attestations:** все релизные файлы собираются автоматически в GitHub Actions с криптографическим подтверждением происхождения сборки (SLSA Build Provenance Attestations).
+          - **Обновлённые элементы управления подписками и анимации:** кнопки обновления, проверки пинга и меню провайдера, экран настроек для каждого провайдера (имя, видимость, интервал обновления, пинг, сортировка, кастомный DNS/DoH).
+          - **Material You (Android 12+):** динамические цвета темы из обоев системы.
+          - **Встроенные ядра:** \`Xray-core\` и \`sing-box\`, режимы **Proxy** и **TUN**.
+
+          ---
+
+          ## ✅ Проверка подлинности сборки (GitHub Attestations)
+
+          Каждый файл релиза имеет криптографическое подтверждение сборки (attestation), подтверждающее, что бинарник собран именно в GitHub Actions из исходного кода этого репозитория:
+
+          \`\`\`bash
+          gh attestation verify ${SETUP_FILE} --repo ${REPO}
+          gh attestation verify ${PORTABLE_FILE} --repo ${REPO}
+          gh attestation verify ${APK_FILE} --repo ${REPO}
+          \`\`\`
+
+          ---
+
+          <details>
+          <summary>🔐 Контрольные суммы SHA-256</summary>
+
+          \`\`\`text
+          ${CHECKSUMS}
+          \`\`\`
+
+          </details>
+          EOF
+
+      - name: Publish GitHub Release
+        shell: bash
+        run: |
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" \
+              "release-assets/Hivox-Setup-${TAG}-win-x64.exe" \
+              "release-assets/Hivox-Portable-${TAG}-win-x64.zip" \
+              "release-assets/Hivox-${TAG}-android.apk" \
+              "release-assets/SHA256SUMS.txt" \
+              --clobber
+            gh release edit "${TAG}" \
+              --title "Hivox ${TAG} — Windows & Android" \
+              --notes-file release-notes.md
+          else
+            gh release create "${TAG}" \
+              "release-assets/Hivox-Setup-${TAG}-win-x64.exe" \
+              "release-assets/Hivox-Portable-${TAG}-win-x64.zip" \
+              "release-assets/Hivox-${TAG}-android.apk" \
+              "release-assets/SHA256SUMS.txt" \
+              --title "Hivox ${TAG} — Windows & Android" \
+              --notes-file release-notes.md
+          fi

@@ -1,0 +1,47 @@
+<UserControl x:Class="Hivox.Views.InboundsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Hivox.Controls">
+    <ScrollViewer Style="{StaticResource M3ScrollViewer}">
+        <StackPanel Margin="0,0,0,24">
+            <TextBlock Text="ЛОКАЛЬНЫЕ ПРОКСИ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <local:M3SettingsRow x:Name="HttpRow" Label="HTTP прокси" Subtitle="Используется как системный прокси Windows" IconData="{StaticResource IconGlobe}" IsToggle="True" IsChecked="True"/>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="58,0,16,0" Opacity="0.5"/>
+                    <local:M3SettingsRow x:Name="SocksRow" Label="SOCKS5 прокси" Subtitle="Поддержка TCP и UDP для приложений" IconData="{StaticResource IconRouter}" IsToggle="True" IsChecked="True"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="ПОРТЫ" Style="{StaticResource M3SectionTitle}"/>
+            <Border Style="{StaticResource M3SettingsSection}">
+                <StackPanel>
+                    <Grid Margin="16,0" Height="54">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="96"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="HTTP порт" VerticalAlignment="Center" FontSize="13" FontWeight="Medium" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBox x:Name="HttpPortBox" Grid.Column="1" Text="10809" Height="36" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="12.5" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                    <Rectangle Height="1" Fill="{DynamicResource M3OutlineVariantBrush}" Margin="16,0" Opacity="0.5"/>
+                    <Grid Margin="16,0" Height="54">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="96"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="SOCKS5 порт" VerticalAlignment="Center" FontSize="13" FontWeight="Medium" Foreground="{DynamicResource M3OnSurfaceBrush}"/>
+                        <TextBox x:Name="SocksPortBox" Grid.Column="1" Text="10808" Height="36" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="12.5" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Button Style="{StaticResource M3FilledBtn}" Width="168" Height="42" Margin="0,20,0,0" HorizontalAlignment="Center" Click="Save_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="{StaticResource IconSave}" Width="15" Height="15" Stretch="Uniform" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,8,0"/>
+                    <TextBlock Text="Сохранить"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

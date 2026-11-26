@@ -1,0 +1,19 @@
+{
+  "subscriptions": [
+    "https://example.com/sub/link"
+  ],
+  "servers": [],
+  "history": [],
+  "settings": {
+    "auto_update": true,
+    "dark_mode": true,
+    "minimize_to_tray": true,
+    "auto_start": false,
+    "show_speed": true,
+    "auto_select_best": true,
+    "use_tun_mode": false,
+    "use_singbox": false,
+    "mux_enabled": true
+  },
+  "_version": "2.0"
+}

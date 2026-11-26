@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Hivox.Mobile.Views.BatteryOptimizationPage"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Оптимизация батареи" FontSize="19" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16" Padding="18,6,18,32">
+
+                <!-- Status Card -->
+                <Border x:Name="StatusCard"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="1"
+                        Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        Padding="18">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+                        <Border x:Name="StatusBadge" Grid.Column="0" WidthRequest="44" HeightRequest="44"
+                                StrokeShape="RoundRectangle 14" StrokeThickness="1"
+                                VerticalOptions="Center">
+                            <Label x:Name="StatusIcon" Text="&#xE1A4;" FontSize="22" FontFamily="MaterialIcons"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label x:Name="StatusTitle" Text="Проверка режима работы..." FontSize="15.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}"/>
+                            <Label x:Name="StatusDescription"
+                                   Text="Для стабильной фоновой работы VPN без разрывов исключите Hivox из энергосбережения."
+                                   FontSize="12.5" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.2"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Why it matters Card -->
+                <Border Style="{StaticResource M3Card}" Padding="18">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="ЗАЧЕМ ЭТО НУЖНО" FontSize="11" FontAttributes="Bold"
+                               CharacterSpacing="0.8" TextColor="{DynamicResource M3Primary}"/>
+                        <Label Text="На многих смартфонах (Xiaomi / HyperOS, Samsung, Huawei, Realme, Pixel) система автоматически останавливает фоновые сервисы при выключенном экране."
+                               FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.25"/>
+                        <Label Text="Добавление Hivox в исключения оптимизации батареи предотвращает случайные обрывы туннеля и помогает автозапуску работать стабильно."
+                               FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}" LineHeight="1.25"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Step by step guide -->
+                <Border Style="{StaticResource M3Card}" Padding="18">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="КАК НАСТРОИТЬ ЗА 10 СЕКУНД" FontSize="11" FontAttributes="Bold"
+                               CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="26" HeightRequest="26" StrokeShape="RoundRectangle 13"
+                                    Stroke="Transparent" BackgroundColor="{DynamicResource M3PrimaryContainer}" VerticalOptions="Start">
+                                <Label Text="1" FontSize="12" FontAttributes="Bold" TextColor="{DynamicResource M3Primary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1" Text="Нажмите «Открыть настройки батареи» ниже."
+                                   FontSize="13.5" TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="26" HeightRequest="26" StrokeShape="RoundRectangle 13"
+                                    Stroke="Transparent" BackgroundColor="{DynamicResource M3PrimaryContainer}" VerticalOptions="Start">
+                                <Label Text="2" FontSize="12" FontAttributes="Bold" TextColor="{DynamicResource M3Primary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1" Text="Переключите фильтр сверху с «Без оптимизации» на «Все приложения» и найдите Hivox."
+                                   FontSize="13.5" TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="26" HeightRequest="26" StrokeShape="RoundRectangle 13"
+                                    Stroke="Transparent" BackgroundColor="{DynamicResource M3PrimaryContainer}" VerticalOptions="Start">
+                                <Label Text="3" FontSize="12" FontAttributes="Bold" TextColor="{DynamicResource M3Primary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1" Text="Выберите «Не экономить» / «Без ограничений»."
+                                   FontSize="13.5" TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Actions -->
+                <Button Text="Открыть настройки батареи"
+                        Style="{StaticResource M3FilledBtn}"
+                        HeightRequest="48"
+                        Clicked="OnOpenBatterySettingsClicked"/>
+
+                <Button Text="Открыть свойства приложения"
+                        Style="{StaticResource M3TonalBtn}"
+                        HeightRequest="46"
+                        Clicked="OnOpenAppDetailsClicked"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

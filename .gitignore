@@ -1,0 +1,40 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+Directory.Build.user.props
+
+# Publish & local release outputs
+publish/
+**/publish/
+publish-*/
+**/publish-*/
+github-release/
+**/github-release/
+release-v*/
+**/release-v*/
+dist/
+*.apk
+*.aab
+
+# Signing keys & secrets (NEVER commit)
+*.keystore
+*.jks
+*.pfx
+*.p12
+
+# User data & internal notes (do NOT commit)
+vpn_data_v2.json
+config_v2.json
+country_cache.json
+anchored_summary.md
+
+# IDE / OS
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.ConnectionSettingsPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Соединение" FontSize="19" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+            <Border Grid.Column="2" StrokeShape="RoundRectangle 12" Padding="10,6"
+                    BackgroundColor="Transparent" StrokeThickness="0" VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDoneTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="Готово" FontSize="15" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3Primary}" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0" Padding="0,4,0,28">
+
+                <!-- Плитка и шторка -->
+                <Label Text="ПЛИТКА И ШТОРКА" Style="{StaticResource M3SectionTitle}" Margin="20,6,20,8"/>
+                <Border Style="{StaticResource M3SettingsCard}">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="12">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAddTileTapped"/>
+                            </Grid.GestureRecognizers>
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                    BackgroundColor="{DynamicResource M3PrimaryContainer}"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE7F4;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Secondary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Добавить Hivox в шторку" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Плитка быстрых настроек — подключение одним свайпом"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="Добавить" FontSize="12.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3Primary}" VerticalOptions="Center"/>
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontSize="19" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                    BackgroundColor="{DynamicResource M3PrimaryContainer}"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE8AC;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Secondary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Сервер и статус" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Выключите, чтобы скрыть название локации и оставить только логотип Hivox"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="NotifServerSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Автоматизация и сеть -->
+                <Label Text="АВТОМАТИЗАЦИЯ И СЕТЬ" Style="{StaticResource M3SectionTitle}"/>
+                <Border Style="{StaticResource M3SettingsCard}">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Автоподключение -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="#44F59E0B" StrokeThickness="1"
+                                    BackgroundColor="#24F59E0B"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE3E7;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Amber}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Автоподключение" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Подключаться при запуске приложения" FontSize="11.5"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="ConnectOnOpenSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Автозапуск при загрузке системы -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="#487C4DFF" StrokeThickness="1"
+                                    BackgroundColor="#247C4DFF"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE8AC;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Primary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Автозапуск при включении" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Запускать туннель после перезагрузки или обновления (BootReceiver)" FontSize="11.5"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="ConnectOnBootSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Автовыбор лучшего узла -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="#44F59E0B" StrokeThickness="1"
+                                    BackgroundColor="#24F59E0B"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE8AC;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Amber}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Автовыбор лучшего узла" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Автоматически выбирать сервер с минимальным пингом"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="AutoBestSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Защита от обрывов / Watchdog -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                    BackgroundColor="{DynamicResource M3RedContainer}"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE32A;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Red}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Защита соединения (Watchdog)" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Контролировать доступность туннеля и переподключать при сбое"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="AutoReconnectSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Разрешить LAN подключения -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                    BackgroundColor="{DynamicResource M3GreenContainer}"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE157;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Green}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Разрешить LAN подключения" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Исключить локальную сеть (Wi-Fi роутер, принтеры, NAS) из туннеля"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="BypassLanSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Доступ через хотспот -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="#4006B6D4" StrokeThickness="1"
+                                    BackgroundColor="#1F06B6D4"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE1E2;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Cyan}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Доступ через хотспот" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Привязать SOCKS5/HTTP прокси к 0.0.0.0, чтобы устройства в вашей Wi-Fi/хотспот сети могли использовать телефон как прокси"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="AllowLanSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <!-- Обход российских сайтов -->
+                        <Grid Padding="16,13" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                    StrokeShape="RoundRectangle 11" Stroke="#44FB923C" StrokeThickness="1"
+                                    BackgroundColor="#24FB923C"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE52E;" FontSize="19" FontFamily="MaterialIcons"
+                                       TextColor="{DynamicResource M3Orange}"
+                                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Обход доменов РФ напрямую" FontSize="14.5" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Направлять российские банки, Госуслуги и маркетплейсы мимо VPN"
+                                       FontSize="11.5" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="BypassRuSwitch" Grid.Column="2" VerticalOptions="Center"/>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

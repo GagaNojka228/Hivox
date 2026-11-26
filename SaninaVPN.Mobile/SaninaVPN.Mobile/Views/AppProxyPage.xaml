@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Hivox.Mobile.Models"
+             x:Class="Hivox.Mobile.Views.AppProxyPage"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,14,18,10" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Прокси по приложениям" FontSize="18" FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+            <Border Grid.Column="2" StrokeShape="RoundRectangle 12" Padding="10,6"
+                    BackgroundColor="Transparent" StrokeThickness="0" VerticalOptions="Center">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDoneTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="Готово" FontSize="15" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3Primary}" VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1" RowDefinitions="Auto,*" Padding="18,4,18,12" RowSpacing="10">
+            <VerticalStackLayout Grid.Row="0" Spacing="10">
+
+                <!-- Master Enable Card -->
+                <Border StrokeShape="RoundRectangle 18"
+                        Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1"
+                        BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        Padding="16,13">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
+                            <Label Text="Включить прокси по приложениям" FontSize="14.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}"/>
+                            <Label Text="Маршрутизация трафика по приложениям" FontSize="11.5"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        </VerticalStackLayout>
+                        <Switch x:Name="MasterSwitch" Grid.Column="1" VerticalOptions="Center"
+                                Toggled="OnMasterToggled"/>
+                    </Grid>
+                </Border>
+
+                <!-- 2 Side-by-Side Mode Cards: Обход | Только через туннель -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <!-- Обход -->
+                    <Border x:Name="BypassCard" Grid.Column="0"
+                            StrokeShape="RoundRectangle 18"
+                            StrokeThickness="1.5"
+                            Padding="14,14">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBypassModeTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Label x:Name="BypassIcon" Text="&#xE14B;" FontSize="24" FontFamily="MaterialIcons"
+                                   HorizontalOptions="Center"/>
+                            <Label x:Name="BypassTitle" Text="Обход" FontSize="14" FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Выбранные приложения обходят туннель"
+                                   FontSize="11" HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Только через туннель -->
+                    <Border x:Name="TunnelOnlyCard" Grid.Column="1"
+                            StrokeShape="RoundRectangle 18"
+                            StrokeThickness="1.5"
+                            Padding="14,14">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTunnelOnlyModeTapped"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                            <Label x:Name="TunnelOnlyIcon" Text="&#xE897;" FontSize="24" FontFamily="MaterialIcons"
+                                   HorizontalOptions="Center"/>
+                            <Label x:Name="TunnelOnlyTitle" Text="Только через туннель" FontSize="13.5" FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+                            <Label Text="Только выбранные приложения идут через туннель"
+                                   FontSize="11" HorizontalTextAlignment="Center"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Reconnect Notice Banner -->
+                <Border StrokeShape="RoundRectangle 14"
+                        Stroke="Transparent"
+                        BackgroundColor="{DynamicResource M3PrimaryContainer}"
+                        Padding="14,10">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="&#xE88E;" FontSize="18" FontFamily="MaterialIcons"
+                               TextColor="{DynamicResource M3Secondary}" VerticalOptions="Center"/>
+                        <Label Text="Переподключите для применения изменений" FontSize="12"
+                               TextColor="{DynamicResource M3OnPrimaryContainer}" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- Search Input -->
+                <Border StrokeShape="RoundRectangle 16"
+                        Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1"
+                        BackgroundColor="{DynamicResource M3SurfaceContainerLow}"
+                        Padding="12,2" HeightRequest="44">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="&#xE8B6;" FontSize="19" FontFamily="MaterialIcons"
+                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center"/>
+                        <Entry x:Name="SearchEntry" Grid.Column="1"
+                               BackgroundColor="Transparent"
+                               Placeholder="Поиск приложений..."
+                               PlaceholderColor="{DynamicResource M3Outline}"
+                               TextColor="{DynamicResource M3OnSurface}"
+                               FontSize="13.5"
+                               TextChanged="OnSearchTextChanged"
+                               VerticalOptions="Center"
+                               VerticalTextAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Hide System Apps & Count / Clear Row -->
+                <Grid ColumnDefinitions="*,Auto" Padding="2,0">
+                    <Label Grid.Column="0" Text="Скрыть системные приложения" FontSize="13.5"
+                           TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                    <Switch x:Name="HideSystemSwitch" Grid.Column="1" IsToggled="True"
+                            Toggled="OnHideSystemToggled" VerticalOptions="Center"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto" Padding="2,0">
+                    <Label x:Name="SelectedCountLabel" Grid.Column="0" Text="Выбрано приложений: 0"
+                           FontSize="12.5" TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="Очистить всё" FontSize="12.5" FontAttributes="Bold"
+                           TextColor="{DynamicResource M3Secondary}" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnClearAllTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <!-- Import / Export Buttons -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                    <Border Grid.Column="0" HeightRequest="40" StrokeShape="RoundRectangle 14"
+                            Stroke="{DynamicResource M3OutlineVariantBrush}" StrokeThickness="1"
+                            BackgroundColor="{DynamicResource M3SurfaceContainer}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnImportAppsTapped"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="&#xE14F;" FontSize="16" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Secondary}" VerticalOptions="Center"/>
+                            <Label Text="Импорт" FontSize="12.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="1" HeightRequest="40" StrokeShape="RoundRectangle 14"
+                            Stroke="{DynamicResource M3OutlineVariantBrush}" StrokeThickness="1"
+                            BackgroundColor="{DynamicResource M3SurfaceContainer}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnExportAppsTapped"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Label Text="&#xE14D;" FontSize="16" FontFamily="MaterialIcons"
+                                   TextColor="{DynamicResource M3Secondary}" VerticalOptions="Center"/>
+                            <Label Text="Экспорт" FontSize="12.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Installed Apps List -->
+            <CollectionView x:Name="AppsCollectionView" Grid.Row="1" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AppProxyItem">
+                        <Border Margin="0,3" Padding="12,10"
+                                StrokeShape="RoundRectangle 16"
+                                StrokeThickness="1"
+                                BackgroundColor="{DynamicResource M3SurfaceContainer}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="Stroke" Value="{DynamicResource M3PrimaryBrush}"/>
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource M3PrimaryContainer}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                    <Setter Property="Stroke" Value="{DynamicResource M3OutlineVariantBrush}"/>
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource M3SurfaceContainer}"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAppRowTapped"/>
+                            </Border.GestureRecognizers>
+
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Border Grid.Column="0" WidthRequest="38" HeightRequest="38"
+                                        StrokeShape="RoundRectangle 11" Stroke="Transparent"
+                                        BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                        VerticalOptions="Center">
+                                    <Label Text="{Binding InitialLetter}" FontSize="15" FontAttributes="Bold"
+                                           TextColor="{DynamicResource M3Secondary}"
+                                           HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                    <Label Text="{Binding AppName}" FontSize="13.5" FontAttributes="Bold"
+                                           TextColor="{DynamicResource M3OnSurface}" LineBreakMode="TailTruncation"/>
+                                    <Label Text="{Binding PackageName}" FontSize="10.5"
+                                           TextColor="{DynamicResource M3OnSurfaceVariant}" LineBreakMode="TailTruncation"/>
+                                </VerticalStackLayout>
+
+                                <CheckBox Grid.Column="2" IsChecked="{Binding IsSelected}"
+                                          Color="{DynamicResource M3Primary}"
+                                          InputTransparent="True"
+                                          VerticalOptions="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="8" Padding="24">
+                        <ActivityIndicator x:Name="LoadingIndicator" IsRunning="True"
+                                           Color="{DynamicResource M3Primary}"
+                                           WidthRequest="28" HeightRequest="28"/>
+                        <Label x:Name="EmptyAppsLabel" Text="Загрузка установленных приложений..."
+                               FontSize="13" TextColor="{DynamicResource M3OnSurfaceVariant}"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

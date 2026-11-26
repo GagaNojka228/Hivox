@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.InboundsPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" Padding="16,16,20,12" ColumnSpacing="12">
+            <Border Grid.Column="0" Style="{StaticResource M3CircleIconBtn}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped"/>
+                </Border.GestureRecognizers>
+                <Label Text="&#xE5C4;" FontSize="18" FontFamily="MaterialIcons"
+                       TextColor="{DynamicResource M3OnSurfaceVariant}"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Border>
+            <Label Grid.Column="1" Text="Локальные Inbounds" FontSize="20" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16" Padding="0,8,0,24">
+                <Border Style="{StaticResource M3SettingsCard}">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid Padding="16,12" ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="HTTP прокси" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Локальный HTTP прокси (127.0.0.1)" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="HttpSwitch" Grid.Column="1" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,12" ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="HTTP порт" FontSize="14.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 10" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    HeightRequest="42" Padding="10,0">
+                                <Entry x:Name="HttpPortEntry" Text="10809" Keyboard="Numeric" WidthRequest="84"
+                                       BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                       VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,12" ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <Label Text="SOCKS5 прокси" FontSize="14.5" FontAttributes="Bold" TextColor="{DynamicResource M3OnSurface}"/>
+                                <Label Text="Локальный SOCKS5 прокси (127.0.0.1)" FontSize="11" TextColor="{DynamicResource M3OnSurfaceVariant}"/>
+                            </VerticalStackLayout>
+                            <Switch x:Name="SocksSwitch" Grid.Column="1" VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView Style="{StaticResource M3Divider}"/>
+
+                        <Grid Padding="16,12" ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="SOCKS порт" FontSize="14.5" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center"/>
+                            <Border Grid.Column="1" StrokeShape="RoundRectangle 10" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                                    StrokeThickness="1" BackgroundColor="{DynamicResource M3SurfaceContainerHigh}"
+                                    HeightRequest="42" Padding="10,0">
+                                <Entry x:Name="SocksPortEntry" Text="10808" Keyboard="Numeric" WidthRequest="84"
+                                       BackgroundColor="Transparent" TextColor="{DynamicResource M3OnSurface}"
+                                       VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Сохранить" Style="{StaticResource M3FilledBtn}" Margin="20,4" Clicked="OnSaveClicked"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

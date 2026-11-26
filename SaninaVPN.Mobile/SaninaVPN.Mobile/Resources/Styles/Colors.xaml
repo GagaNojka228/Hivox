@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Hivox M3 Expressive Deep Violet Obsidian Palette (Default) -->
+    <Color x:Key="M3Primary">#7C4DFF</Color>
+    <Color x:Key="M3OnPrimary">#FFFFFF</Color>
+    <Color x:Key="M3PrimaryContainer">#2A1B3D</Color>
+    <Color x:Key="M3OnPrimaryContainer">#EADDFF</Color>
+    <Color x:Key="M3Secondary">#B388FF</Color>
+    <Color x:Key="M3OnSecondary">#1A102A</Color>
+    <Color x:Key="M3SecondaryContainer">#33204C</Color>
+    <Color x:Key="M3OnSecondaryContainer">#EADDFF</Color>
+    <Color x:Key="M3Tertiary">#FF80E1</Color>
+    <Color x:Key="M3SurfaceDim">#0D0817</Color>
+    <Color x:Key="M3Surface">#140D22</Color>
+    <Color x:Key="M3SurfaceContainerLow">#1A102A</Color>
+    <Color x:Key="M3SurfaceContainer">#201533</Color>
+    <Color x:Key="M3SurfaceContainerHigh">#2A1B3D</Color>
+    <Color x:Key="M3SurfaceContainerHighest">#35234E</Color>
+    <Color x:Key="M3OnSurface">#E6E1F5</Color>
+    <Color x:Key="M3OnSurfaceVariant">#B9B0D8</Color>
+    <Color x:Key="M3Outline">#8A7FA8</Color>
+    <Color x:Key="M3OutlineVariant">#3A2856</Color>
+    <Color x:Key="M3Green">#4ADE80</Color>
+    <Color x:Key="M3OnGreen">#062112</Color>
+    <Color x:Key="M3GreenContainer">#123426</Color>
+    <Color x:Key="M3Amber">#FBBF24</Color>
+    <Color x:Key="M3Cyan">#22D3EE</Color>
+    <Color x:Key="M3Orange">#FB923C</Color>
+    <Color x:Key="M3Red">#F87171</Color>
+    <Color x:Key="M3RedContainer">#3D1724</Color>
+    <Color x:Key="M3SwitchThumb">#E6E1F5</Color>
+    <Color x:Key="M3TabBarBg">#1A102A</Color>
+    <Color x:Key="M3TabActive">#B388FF</Color>
+    <Color x:Key="M3TabInactive">#8A7FA8</Color>
+
+    <SolidColorBrush x:Key="M3PrimaryBrush" Color="{StaticResource M3Primary}"/>
+    <SolidColorBrush x:Key="M3OnPrimaryBrush" Color="{StaticResource M3OnPrimary}"/>
+    <SolidColorBrush x:Key="M3PrimaryContainerBrush" Color="{StaticResource M3PrimaryContainer}"/>
+    <SolidColorBrush x:Key="M3OnPrimaryContainerBrush" Color="{StaticResource M3OnPrimaryContainer}"/>
+    <SolidColorBrush x:Key="M3SecondaryBrush" Color="{StaticResource M3Secondary}"/>
+    <SolidColorBrush x:Key="M3OnSecondaryBrush" Color="{StaticResource M3OnSecondary}"/>
+    <SolidColorBrush x:Key="M3SecondaryContainerBrush" Color="{StaticResource M3SecondaryContainer}"/>
+    <SolidColorBrush x:Key="M3OnSecondaryContainerBrush" Color="{StaticResource M3OnSecondaryContainer}"/>
+    <SolidColorBrush x:Key="M3TertiaryBrush" Color="{StaticResource M3Tertiary}"/>
+    <SolidColorBrush x:Key="M3SurfaceDimBrush" Color="{StaticResource M3SurfaceDim}"/>
+    <SolidColorBrush x:Key="M3SurfaceBrush" Color="{StaticResource M3Surface}"/>
+    <SolidColorBrush x:Key="M3SurfaceContainerLowBrush" Color="{StaticResource M3SurfaceContainerLow}"/>
+    <SolidColorBrush x:Key="M3SurfaceContainerBrush" Color="{StaticResource M3SurfaceContainer}"/>
+    <SolidColorBrush x:Key="M3SurfaceContainerHighBrush" Color="{StaticResource M3SurfaceContainerHigh}"/>
+    <SolidColorBrush x:Key="M3SurfaceContainerHighestBrush" Color="{StaticResource M3SurfaceContainerHighest}"/>
+    <SolidColorBrush x:Key="M3OnSurfaceBrush" Color="{StaticResource M3OnSurface}"/>
+    <SolidColorBrush x:Key="M3OnSurfaceVariantBrush" Color="{StaticResource M3OnSurfaceVariant}"/>
+    <SolidColorBrush x:Key="M3OutlineBrush" Color="{StaticResource M3Outline}"/>
+    <SolidColorBrush x:Key="M3OutlineVariantBrush" Color="{StaticResource M3OutlineVariant}"/>
+    <SolidColorBrush x:Key="M3GreenBrush" Color="{StaticResource M3Green}"/>
+    <SolidColorBrush x:Key="M3OnGreenBrush" Color="{StaticResource M3OnGreen}"/>
+    <SolidColorBrush x:Key="M3GreenContainerBrush" Color="{StaticResource M3GreenContainer}"/>
+    <SolidColorBrush x:Key="M3AmberBrush" Color="{StaticResource M3Amber}"/>
+    <SolidColorBrush x:Key="M3CyanBrush" Color="{StaticResource M3Cyan}"/>
+    <SolidColorBrush x:Key="M3OrangeBrush" Color="{StaticResource M3Orange}"/>
+    <SolidColorBrush x:Key="M3RedBrush" Color="{StaticResource M3Red}"/>
+    <SolidColorBrush x:Key="M3RedContainerBrush" Color="{StaticResource M3RedContainer}"/>
+
+</ResourceDictionary>

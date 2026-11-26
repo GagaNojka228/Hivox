@@ -1,0 +1,16 @@
+# Build outputs
+bin/
+obj/
+publish/
+github-release/
+Installer/bin/
+Installer/obj/
+*.user
+*.suo
+
+# Runtime user data, subscriptions, and logs (never commit!)
+vpn_data_v2.json
+config_v2.json
+geoip_cache.json
+*.log
+*.tmp

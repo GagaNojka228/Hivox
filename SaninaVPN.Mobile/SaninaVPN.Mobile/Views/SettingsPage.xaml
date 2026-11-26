@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Hivox.Mobile.ViewModels"
+             x:Class="Hivox.Mobile.Views.SettingsPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="{DynamicResource M3SurfaceDim}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView Padding="18,16,18,32">
+        <VerticalStackLayout Spacing="16">
+
+            <!-- Title -->
+            <Label Text="Настройки" FontSize="26" FontAttributes="Bold"
+                   TextColor="{DynamicResource M3OnSurface}" Margin="2,0,0,2" />
+
+            <!-- ПРОКСИ ПО ПРИЛОЖЕНИЯМ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ПРОКСИ ПО ПРИЛОЖЕНИЯМ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="14,13">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAppProxyTapped" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                VerticalOptions="Center">
+                            <Label Text="&#xE5C3;" FontFamily="MaterialIcons" FontSize="19"
+                                   TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="Прокси по приложениям" FontSize="15" FontAttributes="Bold"
+                               TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        <Label Grid.Column="2" Text="{Binding PerAppProxySummary}" FontSize="13"
+                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                               TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ОФОРМЛЕНИЕ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ОФОРМЛЕНИЕ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnThemeTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE40A;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Оформление" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding ThemeDisplayName}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLanguageTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F06B6D4" Stroke="#4006B6D4" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE894;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Язык приложения" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding AppLanguageSummary}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- СОЕДИНЕНИЕ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="СОЕДИНЕНИЕ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="14,13">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConnectionSettingsTapped" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                VerticalOptions="Center">
+                            <Label Text="&#xE3E7;" FontFamily="MaterialIcons" FontSize="19"
+                                   TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" Text="Соединение" FontSize="15" FontAttributes="Bold"
+                               TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                        <Label Grid.Column="2" Text="Настроить" FontSize="13"
+                               TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                        <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                               TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ТУННЕЛЬ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ТУННЕЛЬ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14" Padding="14,13">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTunnelSettingsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE53B;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Туннель" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding ModeShortLabel}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+                        <BoxView HeightRequest="1" BackgroundColor="{DynamicResource M3OutlineVariant}" Margin="66,0,0,0" />
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14" Padding="14,13">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnGeoDataTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#2000E5FF" Stroke="#4800E5FF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE55B;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Geo-базы (geoip / geosite)" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding GeoDataSummary}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ПРОВАЙДЕРЫ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ПРОВАЙДЕРЫ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Мои подписки -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSubscriptionsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F06B6D4" Stroke="#4006B6D4" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE2C2;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Cyan}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Мои подписки" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding SubscriptionsCountText}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Настройки провайдеров -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSubSettingsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE8B8;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Настройки провайдеров" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding ProviderSettingsSummary}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Настройки пинга -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPingSettingsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE1E2;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Настройки пинга" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding PingTypeLabel}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ПРИЛОЖЕНИЕ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ПРИЛОЖЕНИЕ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- О приложении -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAboutTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE88E;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="О приложении" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="Hivox" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Схемы URL-адресов -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnUrlSchemesTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE157;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Схемы URL-адресов" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="hivox://" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Резервное копирование -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBackupTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE2C3;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Резервное копирование" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ПРОИЗВОДИТЕЛЬНОСТЬ -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ПРОИЗВОДИТЕЛЬНОСТЬ" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- Расширенные настройки -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTunnelSettingsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE86F;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Расширенные настройки" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="Xray Core" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Отключать при блокировке -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE51C;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Отключать при блокировке" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Разрывать при блокировке экрана" FontSize="12"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" IsToggled="{Binding DisconnectOnLock}"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Оптимизация батареи -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBatteryOptimizationTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#1F10B981" Stroke="#4010B981" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE1A4;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Green}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Оптимизация батареи" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="{Binding BatteryOptimizationSummary}" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{DynamicResource M3OutlineVariant}" Opacity="0.35" Margin="14,0" />
+
+                        <!-- Мониторинг памяти -->
+                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="14,13" ColumnSpacing="14">
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#24F59E0B" Stroke="#44F59E0B" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE322;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Amber}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Мониторинг памяти" FontSize="15" FontAttributes="Bold"
+                                       TextColor="{DynamicResource M3OnSurface}" />
+                                <Label Text="Показывать на главном экране" FontSize="12"
+                                       TextColor="{DynamicResource M3OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2" IsToggled="{Binding ShowMemoryUsage}"
+                                    OnColor="{DynamicResource M3Primary}" VerticalOptions="Center" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- ОТЛАДКА -->
+            <VerticalStackLayout Spacing="7">
+                <Label Text="ОТЛАДКА" FontSize="11" FontAttributes="Bold"
+                       CharacterSpacing="0.8" TextColor="{DynamicResource M3OnSurfaceVariant}" Margin="4,0,0,0" />
+                <Border BackgroundColor="{DynamicResource M3SurfaceContainer}"
+                        StrokeShape="RoundRectangle 20" Stroke="{DynamicResource M3OutlineVariantBrush}"
+                        StrokeThickness="1" Padding="0">
+                    <VerticalStackLayout Spacing="0">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14" Padding="14,13">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnConnectionCheckTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#2000E676" Stroke="#4800E676" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE1D8;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Secondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Проверить соединение" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="IP · DNS · Пинг" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+                        <BoxView HeightRequest="1" BackgroundColor="{DynamicResource M3OutlineVariant}" Margin="66,0,0,0" />
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="14" Padding="14,13">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDiagnosticsTapped" />
+                            </Grid.GestureRecognizers>
+                            <Border WidthRequest="38" HeightRequest="38" StrokeShape="RoundRectangle 12"
+                                    BackgroundColor="#247C4DFF" Stroke="#487C4DFF" StrokeThickness="1"
+                                    VerticalOptions="Center">
+                                <Label Text="&#xE86F;" FontFamily="MaterialIcons" FontSize="19"
+                                       TextColor="{DynamicResource M3Primary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Grid.Column="1" Text="Логи туннеля" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{DynamicResource M3OnSurface}" VerticalOptions="Center" />
+                            <Label Grid.Column="2" Text="Xray · Сеть" FontSize="13"
+                                   TextColor="{DynamicResource M3OnSurfaceVariant}" VerticalOptions="Center" />
+                            <Label Grid.Column="3" Text="&#xE5CC;" FontFamily="MaterialIcons" FontSize="20"
+                                   TextColor="{DynamicResource M3Outline}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Сбросить настройки -->
+            <Border BackgroundColor="#20EF4444" StrokeShape="RoundRectangle 20"
+                    Stroke="#48EF4444" StrokeThickness="1" Padding="16,15" Margin="0,4,0,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnResetSettingsTapped" />
+                </Border.GestureRecognizers>
+                <Label Text="Сбросить настройки" FontSize="15" FontAttributes="Bold"
+                       TextColor="{DynamicResource M3Red}" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>Hivox</RootNamespace>
+    <AssemblyName>Hivox</AssemblyName>
+    <AssemblyTitle>Hivox</AssemblyTitle>
+    <Product>Hivox</Product>
+    <Version>2.1.1</Version>
+    <SatelliteResourceLanguages>en;ru</SatelliteResourceLanguages>
+    <ApplicationIcon>Assets\Hivox.ico</ApplicationIcon>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Installer\**;github-release\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xray.exe" Condition="Exists('xray.exe')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Include="sing-box.exe" Condition="Exists('sing-box.exe')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wintun.dll" Condition="Exists('wintun.dll')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+    <EmbeddedResource Include="xray.exe" Condition="Exists('xray.exe')">
+      <LogicalName>Hivox.Cores.xray.exe</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sing-box.exe" Condition="Exists('sing-box.exe')">
+      <LogicalName>Hivox.Cores.sing-box.exe</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wintun.dll" Condition="Exists('wintun.dll')">
+      <LogicalName>Hivox.Cores.wintun.dll</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

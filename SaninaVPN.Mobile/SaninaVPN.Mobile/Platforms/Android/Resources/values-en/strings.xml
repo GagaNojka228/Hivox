@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="qs_tile_label">Hivox</string>
+    <string name="qs_tile_connected">Connected</string>
+    <string name="qs_tile_connecting">Connecting...</string>
+    <string name="qs_tile_disconnected">Disconnected</string>
+    <string name="notif_disconnect">Disconnect</string>
+    <string name="notif_protected_active">Protected connection active</string>
+    <string name="widget_label">Hivox VPN</string>
+    <string name="widget_connect">Connect</string>
+    <string name="widget_disconnect">Stop</string>
+</resources>
