@@ -287,19 +287,24 @@ jobs:
 
       - name: Publish GitHub Release
         shell: bash
+        env:
+          GH_REPO: ${{ github.repository }}
         run: |
-          if gh release view "${TAG}" >/dev/null 2>&1; then
+          if gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
             gh release upload "${TAG}" \
+              --repo "${GITHUB_REPOSITORY}" \
               "release-assets/Hivox-Setup-${TAG}-win-x64.exe" \
               "release-assets/Hivox-Portable-${TAG}-win-x64.zip" \
               "release-assets/Hivox-${TAG}-android.apk" \
               "release-assets/SHA256SUMS.txt" \
               --clobber
             gh release edit "${TAG}" \
+              --repo "${GITHUB_REPOSITORY}" \
               --title "Hivox ${TAG} — Windows & Android" \
               --notes-file release-notes.md
           else
             gh release create "${TAG}" \
+              --repo "${GITHUB_REPOSITORY}" \
               "release-assets/Hivox-Setup-${TAG}-win-x64.exe" \
               "release-assets/Hivox-Portable-${TAG}-win-x64.zip" \
               "release-assets/Hivox-${TAG}-android.apk" \
